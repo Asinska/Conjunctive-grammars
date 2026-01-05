@@ -1,0 +1,18 @@
+S X X' X" X"' Y Y' Y" Y"' Z T
+a
+S -> X & ~ a X
+S -> ~ X & a X
+S -> Z & ~ a Z
+S -> ~ Z & a Z
+X -> a X' X'
+X' -> ~ X" X"
+X" -> ~ X"' X"'
+X"' -> ~ X
+Y -> a a Y' Y'
+Y' -> ~ Y" Y" & T
+Y" -> ~ Y"' Y"' & T
+Y"' -> ~ Y & T
+Z -> Y
+Z -> a Y
+T -> a a T
+T -> eps
