@@ -45,7 +45,7 @@ void read_nonterminals() {
         nonterminals.push_back(nt);
         // nonterminals_cnt++;
     }
-    nullable.resize(nonterminals.size(), NOT_NULLABLE);
+    nullable.resize(nonterminals.size(), false);
 }
 void read_terminals() {
     vector<string> line = getTokenizedLine();
@@ -79,42 +79,35 @@ bool read_production() {
     }
     if (line.size() == 3) {
         if (line[2] == EMPTY_STRING_SYM) { //A -> ε
-            nullable[nt_symbols_to_numbers[line[0]]] = NULLABLE_DIRECT_PRODUCTION;
+            nullable[nt_symbols_to_numbers[line[0]]] = true;
             return true;
         }
         if (is_terminal(line[2])) { //A -> a
-            terminal_productions.push_back(Production(nt_symbols_to_numbers[line[0]], {{true, {t_symbols_to_numbers[line[2]]}}}));
+            terminal_productions.push_back(Production(nt_symbols_to_numbers[line[0]], {{t_symbols_to_numbers[line[2]]}}));
             return true;
         }
     }
 
 
-    vector<pair<bool, vector<int>>> conjuncts;
+    vector<vector<int>> conjuncts;
     int pos = 2;
     while (pos < (int)line.size()) {
-        pair<bool, vector<int>> conjunct = {true, {}};
-        if (line[pos] == NEG_SYM) {
-            conjunct.first = false;
-            pos++;
-            if (pos >= (int)line.size()) {
-                ERROR(production_error);
-            }
-        }
+        vector<int> conjunct;
         string sym;
         while (pos < (int)line.size() && ((sym = line[pos]) != "&")) {
             if (is_nonterminal(line[pos])) {
-                conjunct.second.push_back(nt_symbols_to_numbers[line[pos]]);
+                conjunct.push_back(nt_symbols_to_numbers[line[pos]]);
             } 
             else if (is_terminal(line[pos])) {
                 int t_number = t_symbols_to_numbers[line[pos]];
                 if (nt_generator[t_number] == -1) {
                     nt_generator[t_number] = introduce_new_nonterminal(line[pos]);
-                    terminal_productions.push_back(Production(nt_generator[t_number], {{true, {t_number}}}));
+                    terminal_productions.push_back(Production(nt_generator[t_number], {{t_number}}));
                 }
-                conjunct.second.push_back(nt_generator[t_number]);
+                conjunct.push_back(nt_generator[t_number]);
             }
             else if (line[pos] == EMPTY_STRING_SYM) {
-                conjunct.second.push_back(nt_symbols_to_numbers[EMPTY_STRING_NONTERMINAL]);
+                conjunct.push_back(nt_symbols_to_numbers[EMPTY_STRING_NONTERMINAL]);
             }
             else {
                 ERROR(production_error);

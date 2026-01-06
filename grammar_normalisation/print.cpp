@@ -24,21 +24,18 @@ void print_productions() {
     for (Production p: nonterminal_productions) {
         cout << nonterminals[p.N] << " -> ";
         bool first = true;
-        for (pair<bool, vector<int>> conjunct: p.conjunction) {
+        for (vector<int> conjunct: p.conjunction) {
             if (first) first = false;
             else cout << "& ";
-            if (conjunct.first == false) {
-                cout << NEG_SYM << " ";
-            }
-            for (int x: conjunct.second) {
+            for (int x: conjunct) {
                 cout << nonterminals[x] << " ";
             }
         }
         cout << "\n";
     }
     for (Production p: terminal_productions) {
-        cout << nonterminals[p.N] << " -> " << terminals[p.conjunction[0].second[0]] << "\n";
+        cout << nonterminals[p.N] << " -> " << terminals[p.conjunction[0][0]]<< "\n";
     }
-    // cout << "_" << EMPTY_STRING_SYM << " -> " << EMPTY_STRING_SYM << "\n";
+    // // // cout << "_" << EMPTY_STRING_SYM << " -> " << EMPTY_STRING_SYM << "\n";
     if (nullable[0]) cout << nonterminals[0] << " -> " << EMPTY_STRING_SYM << "\n";
 }

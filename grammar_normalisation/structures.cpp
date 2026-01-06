@@ -9,5 +9,6 @@ vector<string> nonterminals, terminals;
 map<string, int> nt_symbols_to_numbers, t_symbols_to_numbers;
 // nonterminals_cnt, terminals_cnt;
 vector<Production> nonterminal_productions, terminal_productions;
-vector<int> nullable;
+vector<bool> nullable;
 vector<int> nt_generator;
+map<pair<int, int>, int> nt_pair_generator;

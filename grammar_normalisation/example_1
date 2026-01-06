@@ -1,0 +1,11 @@
+S A B C D
+a b c 
+S -> A B & D C 
+A -> a A 
+A -> eps
+B -> b B c 
+B -> eps 
+C -> c C 
+C -> eps 
+D -> a D b 
+D -> eps
