@@ -1,5 +1,5 @@
-#ifndef CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
-#define CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
+#ifndef PARSER_GRAMMAR_SOLVER_H_
+#define PARSER_GRAMMAR_SOLVER_H_
 
 #include <map>
 #include <memory>
@@ -45,4 +45,4 @@ class GrammarSolver {
 
 }  // namespace conjunctive_grammar
 
-#endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
+#endif  // PARSER_GRAMMAR_SOLVER_H_

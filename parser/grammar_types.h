@@ -1,5 +1,5 @@
-#ifndef CONJUNCTIVE_GRAMMARS_PARSER_GRAMMAR_TYPES_
-#define CONJUNCTIVE_GRAMMARS_PARSER_GRAMMAR_TYPES_
+#ifndef PARSER_GRAMMAR_TYPES_H_
+#define PARSER_GRAMMAR_TYPES_H_
 
 #include <vector>
 
@@ -28,4 +28,4 @@ struct Production {
       : producer(nonterminal), conjunction(conjunction) {}
 };
 
-#endif  // CONJUNCTIVE_GRAMMARS_PARSER_GRAMMAR_TYPES_
+#endif  // PARSER_GRAMMAR_TYPES_H_
