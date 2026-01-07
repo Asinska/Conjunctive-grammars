@@ -1,61 +1,48 @@
-// grammar_solver.h
 #ifndef CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
 #define CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
 
-#include <vector>
+#include <map>
 #include <memory>
 #include <string>
-#include <map>
-#include <string>
+#include <vector>
+
 #include "grammar_types.h"
 
-// Namespace to avoid collision
 namespace conjunctive_grammar {
-
-// Forward declarations
-// struct Nonterminal;
-// struct NonterminalPair;
 
 class GrammarSolver {
  public:
   GrammarSolver();
-  // ~GrammarSolver() = default;
 
-  // Use PascalCase for methods
-  void ParseInput(); 
-  // void Solve(int n);
+  void ParseInput();
   void Solve();
-  void PrintResult();// const;
+  void PrintResult();
 
  private:
-  // Data members end with a trailing underscore
-  int n_; 
+  int n_;
   Nonterminal* start_symbol_;
-  string terminal_name_;
-  
-  // Use smart pointers (std::unique_ptr) to own objects. No "naked" new.
+  std::string terminal_name_;
+
   std::vector<std::unique_ptr<Nonterminal>> nonterminals_;
   std::vector<std::unique_ptr<NonterminalPair>> nonterminal_pairs_;
-  
-  // Productions can be stored directly if they are copyable/movable
-  std::vector<Production> productions_;
-  
-  // Helper to lookup names
-  std::map<std::string, Nonterminal*> name_to_nonterminal_;
-  std::map<pair<Nonterminal*, Nonterminal*>, NonterminalPair*> nonterminal_pair_to_pointer_;
 
-  bool IsNonterminal(string s);
+  std::vector<Production> productions_;
+
+  std::map<std::string, Nonterminal*> name_to_nonterminal_;
+  std::map<std::pair<Nonterminal*, Nonterminal*>, NonterminalPair*>
+      nonterminal_pair_to_pointer_;
+
+  bool IsNonterminal(std::string s);
   void ReadN();
   void ReadNonterminals();
   void ReadTerminal();
   bool ReadProduction();
   std::vector<std::string> GetTokenizedLine();
-  void Error(string error_message);
+  void Error(std::string error_message);
   void ReadGrammar();
   void EvaluatePair(NonterminalPair* nonterminal_pair, int i);
-
 };
 
-} // namespace conjunctive_grammar
+}  // namespace conjunctive_grammar
 
-#endif // CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
+#endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_SOLVER_H_
