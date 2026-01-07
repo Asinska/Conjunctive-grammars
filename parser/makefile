@@ -4,15 +4,15 @@ LDLIBS   := -lgmpxx -lgmp
 
 TARGET   := main
 
-SRC      := UnaryGrammarCheck.cpp parse_input.cpp helpers.cpp structures.cpp
-OBJ      := $(SRC:.cpp=.o)
+SRC      := main.cc convolutions.cc grammar_solver.cc
+OBJ      := $(SRC:.cc=.o)
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CXX) $(OBJ) -o $@ $(LDLIBS)
 
-%.o: %.cpp
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:

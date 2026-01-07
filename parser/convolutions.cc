@@ -1,6 +1,7 @@
-#include <vector>
 #include <gmpxx.h>
-#include <iostream>
+
+#include <vector>
+// #include <iostream>
 using namespace std;
 
 vector<char> splice(vector<char>& x, int l, int r) {
@@ -9,7 +10,7 @@ vector<char> splice(vector<char>& x, int l, int r) {
     return result;
 }
 
-vector<char> conv(vector<char>& x, int lx, int rx, vector<char>& y, int ly, int ry) {
+vector<char> StandardConvolution(vector<char>& x, int lx, int rx, vector<char>& y, int ly, int ry) {
     vector<char> xx = splice(x, lx, rx);
     vector<char> yy = splice(y, ly, ry);
     int n = xx.size() - 1;
@@ -24,7 +25,7 @@ vector<char> conv(vector<char>& x, int lx, int rx, vector<char>& y, int ly, int 
     return z;
 }
 
-vector<char> multconv(vector<char>& x, int lx, int rx, vector<char>& y, int ly, int ry) {
+vector<char> MultiplicationConvolution(vector<char>& x, int lx, int rx, vector<char>& y, int ly, int ry) {
     int len = rx-lx;
     int log = 0, power = 1;
     while (power <= len+1) {
