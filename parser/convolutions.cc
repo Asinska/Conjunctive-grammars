@@ -1,15 +1,18 @@
+#include "convolutions.h"
+
 #include <gmpxx.h>
 
 #include <vector>
 
-std::vector<char> splice(std::vector<char>& x, int l, int r) {
+std::vector<char> splice(const std::vector<char>& x, int l, int r) {
   std::vector<char> result(r - l + 1);
   for (int i = l; i < std::min(r, (int)x.size()); i++) result[i - l + 1] = x[i];
   return result;
 }
 
-std::vector<char> StandardConvolution(std::vector<char>& x, int lx, int rx,
-                                      std::vector<char>& y, int ly, int ry) {
+std::vector<char> StandardConvolution(const std::vector<char>& x, int lx,
+                                      int rx, const std::vector<char>& y,
+                                      int ly, int ry) {
   std::vector<char> xx = splice(x, lx, rx);
   std::vector<char> yy = splice(y, ly, ry);
   int n = xx.size() - 1;
@@ -24,8 +27,8 @@ std::vector<char> StandardConvolution(std::vector<char>& x, int lx, int rx,
   return z;
 }
 
-std::vector<char> MultiplicationConvolution(std::vector<char>& x, int lx,
-                                            int rx, std::vector<char>& y,
+std::vector<char> MultiplicationConvolution(const std::vector<char>& x, int lx,
+                                            int rx, const std::vector<char>& y,
                                             int ly, int ry) {
   int len = rx - lx;
   int log = 0, power = 1;

@@ -17,16 +17,13 @@ constexpr std::string_view kEmptyStringSym = "eps";
 
 namespace conjunctive_grammar {
 
-// --- Constructor ---
-GrammarSolver::GrammarSolver() : n_(0), start_symbol_(NULL) {}
+GrammarSolver::GrammarSolver() : n_(0), start_symbol_(nullptr) {}
 
-// --- Public Method: ParseInput ---
 void GrammarSolver::ParseInput() {
   ReadN();
   ReadGrammar();
 }
 
-// --- Public Method: Solve ---
 void GrammarSolver::Solve() {
   for (const auto& nt : nonterminals_) {
     if (nt->produces_terminal) {
@@ -57,7 +54,6 @@ void GrammarSolver::Solve() {
   }
 }
 
-// --- Public Method: PrintResult ---
 void GrammarSolver::PrintResult() {
   for (int i = 0; i <= n_; i++) {
     if (start_symbol_->v[i]) {
@@ -67,12 +63,10 @@ void GrammarSolver::PrintResult() {
   std::cout << "\n";
 }
 
-// --- Private Helper: IsNonterminal ---
 bool GrammarSolver::IsNonterminal(std::string s) {
   return name_to_nonterminal_.find(s) != name_to_nonterminal_.end();
 }
 
-// --- Private Helper: ReadN ---
 void GrammarSolver::ReadN() {
   std::string line;
   std::getline(std::cin, line);
@@ -82,7 +76,6 @@ void GrammarSolver::ReadN() {
   }
 }
 
-// --- Private Helper: ReadNonterminals ---
 void GrammarSolver::ReadNonterminals() {
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() == 0) {
@@ -101,7 +94,6 @@ void GrammarSolver::ReadNonterminals() {
   }
 }
 
-// --- Private Helper: ReadTerminal ---
 void GrammarSolver::ReadTerminal() {
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() != 1) {
@@ -113,7 +105,6 @@ void GrammarSolver::ReadTerminal() {
   }
 }
 
-// --- Private Helper: ReadProduction ---
 bool GrammarSolver::ReadProduction() {
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() == 0) return false;
@@ -168,7 +159,6 @@ bool GrammarSolver::ReadProduction() {
   return true;
 }
 
-// --- Private Helper: ReadGrammar ---
 void GrammarSolver::ReadGrammar() {
   ReadNonterminals();
   ReadTerminal();
@@ -176,7 +166,6 @@ void GrammarSolver::ReadGrammar() {
     ;
 }
 
-// --- Private Helper: EvaluatePair ---
 void GrammarSolver::EvaluatePair(NonterminalPair* nonterminal_pair, int i) {
   for (int k = 1; (k < i) && ((i % k) == 0); k <<= 1) {
     std::vector<char> u1 =
@@ -195,7 +184,6 @@ void GrammarSolver::EvaluatePair(NonterminalPair* nonterminal_pair, int i) {
   }
 }
 
-// --- Private Helper: GetTokenizedLine ---
 std::vector<std::string> GrammarSolver::GetTokenizedLine() {
   std::string line;
   getline(std::cin, line);
@@ -208,7 +196,6 @@ std::vector<std::string> GrammarSolver::GetTokenizedLine() {
   return tokens;
 }
 
-// --- Private Helper: Error ---
 void GrammarSolver::Error(std::string error_message) {
   std::cerr << "Incorrect input error: " << error_message << '\n';
   exit(EXIT_FAILURE);
