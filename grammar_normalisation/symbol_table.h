@@ -18,6 +18,8 @@ class SymbolTable {
   int GetTerminalId(const std::string &symbol_name);
   std::string GetNonterminalName(int symbol_id);
   std::string GetTerminalName(int symbol_id);
+  int GetNonterminalCount();
+  int GetTerminalCount();
 
  private:
   std::vector<std::string> nonterminals_, terminals_;

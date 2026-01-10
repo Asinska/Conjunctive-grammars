@@ -39,3 +39,10 @@ std::string SymbolTable::GetTerminalName(int symbol_id) {
     return terminals_[symbol_id];
 }
 
+int SymbolTable::GetNonterminalCount() {
+    return nonterminals_.size();
+}
+
+int SymbolTable::GetTerminalCount() {
+    return terminals_.size();
+}

@@ -64,7 +64,7 @@ bool GrammarIO::ReadProduction(std::vector<Production> &productions, SymbolTable
 
     int producer = symbol_table.GetNonterminalId(line[0]);
     int it = 2;
-    while (it < line.size()) {
+    while (it < (int)line.size()) {
         std::vector<std::vector<Symbol>> conjuncts;
         while (it < (int)line.size() && line[it] != "|") {
             std::vector<Symbol> conjunct;
@@ -95,7 +95,7 @@ bool GrammarIO::ReadProduction(std::vector<Production> &productions, SymbolTable
                 Error("Conjunct must be nonempty");
             }
             conjuncts.push_back(conjunct);
-            if (it == line.size() || line[it] == "|") {
+            if (it == (int)line.size() || line[it] == "|") {
                 break;
             }
             it++;
@@ -123,7 +123,7 @@ void GrammarIO::ReadNonterminals(int& nonterminals_cnt, int &start_symbol, Symbo
         if (start_symbol == -1) {
             start_symbol = symbol_table.GetNonterminalId(symbol);
         }
-        nonterminals_cnt++;
+        // nonterminals_cnt++;
     }
 }
 
@@ -138,7 +138,7 @@ void GrammarIO::ReadTerminals(int &terminals_cnt, SymbolTable &symbol_table) {
         if (symbol_table.IsTerminal(symbol)) 
             Error("Terminal symbols should be pairwise distinct.");
         symbol_table.AddTerminal(symbol);
-        terminals_cnt++;
+        // terminals_cnt++;
     }
 }
 
@@ -163,11 +163,12 @@ void GrammarIO::PrintProductions(std::vector<Production> &productions, SymbolTab
                 }
             }
         }
+        std::cout << '\n';
     }
 }
 
 void GrammarIO::PrintTerminals(int &terminals_cnt, SymbolTable &symbol_table) {
-    for (int i = 0; i < terminals_cnt; i++) {
+    for (int i = 0; i < symbol_table.GetTerminalCount(); i++) {
         std::cout << symbol_table.GetTerminalName(i) << ' ';
     }
     std::cout << '\n';
@@ -175,7 +176,7 @@ void GrammarIO::PrintTerminals(int &terminals_cnt, SymbolTable &symbol_table) {
 
 void GrammarIO::PrintNonterminals(int &nonterminals_cnt, int &start_symbol, SymbolTable &symbol_table) {
     std::cout << symbol_table.GetNonterminalName(start_symbol) << ' ';
-    for (int i = 0; i < nonterminals_cnt; i++) {
+    for (int i = 0; i < symbol_table.GetNonterminalCount(); i++) {
         if (i == start_symbol) continue;
         std::cout << symbol_table.GetNonterminalName(i) << ' ';
     }
