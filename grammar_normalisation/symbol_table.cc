@@ -1,14 +1,14 @@
 #include "symbol_table.h"
 
-bool SymbolTable::IsNonterminal(std::string symbol) {
+bool SymbolTable::IsNonterminal(const std::string &symbol) {
     return nonterminal_to_id_.find(symbol) != nonterminal_to_id_.end();
 }
 
-bool SymbolTable::IsTerminal(std::string symbol) {
+bool SymbolTable::IsTerminal(const std::string &symbol) {
     return terminal_to_id_.find(symbol) != terminal_to_id_.end();
 }
 
-void SymbolTable::AddNonterminal(std::string symbol_name) {
+void SymbolTable::AddNonterminal(const std::string &symbol_name) {
     nonterminal_to_id_[symbol_name] = nonterminals_.size();
     nonterminals_.push_back(symbol_name);
 }
@@ -20,16 +20,16 @@ int SymbolTable::AddNonterminal() {
     return nonterminal_to_id_[new_name];
 }
 
-void SymbolTable::AddTerminal(std::string symbol_name) {
+void SymbolTable::AddTerminal(const std::string &symbol_name) {
     terminal_to_id_[symbol_name] = terminals_.size();
     terminals_.push_back(symbol_name);
 }
 
-int SymbolTable::GetNonterminalId(std::string symbol_name) {
+int SymbolTable::GetNonterminalId(const std::string &symbol_name) {
     return nonterminal_to_id_[symbol_name];
 }
 
-int SymbolTable::GetTerminalId(std::string symbol_name) {
+int SymbolTable::GetTerminalId(const std::string &symbol_name) {
     return terminal_to_id_[symbol_name];
 }
 std::string SymbolTable::GetNonterminalName(int symbol_id) {

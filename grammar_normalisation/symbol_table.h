@@ -9,13 +9,13 @@
 
 class SymbolTable {
  public:
-  bool IsNonterminal(std::string symbol_name);
-  bool IsTerminal(std::string symbol_name);
-  void AddNonterminal(std::string symbol_name);
+  bool IsNonterminal(const std::string &symbol_name);
+  bool IsTerminal(const std::string &symbol_name);
+  void AddNonterminal(const std::string &symbol_name);
   int AddNonterminal();
-  void AddTerminal(std::string symbol_name);
-  int GetNonterminalId(std::string symbol_name);
-  int GetTerminalId(std::string symbol_name);
+  void AddTerminal(const std::string &symbol_name);
+  int GetNonterminalId(const std::string &symbol_name);
+  int GetTerminalId(const std::string &symbol_name);
   std::string GetNonterminalName(int symbol_id);
   std::string GetTerminalName(int symbol_id);
 
