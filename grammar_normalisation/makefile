@@ -4,15 +4,15 @@ LDLIBS   := -lgmpxx -lgmp
 
 TARGET   := main
 
-SRC      := main.cpp read.cpp print.cpp structures.cpp helpers.cpp
-OBJ      := $(SRC:.cpp=.o)
+SRC      := main.cc grammar.cc grammar_io.cc symbol_table.cc symbol_names_generator.cc
+OBJ      := $(SRC:.cc=.o)
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CXX) $(OBJ) -o $@ $(LDLIBS)
 
-%.o: %.cpp
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
