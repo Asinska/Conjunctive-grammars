@@ -2,6 +2,7 @@
 #define GRAMMAR_NORMALISATION_GRAMMAR_TYPES_H_
 
 #include <vector>
+#include <compare>
 
 enum class SymbolType {
   kTerminal,
@@ -14,6 +15,7 @@ struct Symbol {
   int value;
   Symbol(SymbolType type) : type(type), value(-1) {}
   Symbol(SymbolType type, int value) : type(type), value(value) {}
+  auto operator<=>(const Symbol&) const = default;
 };
 
 enum class ProductionType {
@@ -28,6 +30,8 @@ struct Production {
   int producer;
   std::vector<std::vector<Symbol>> conjunction;
   Production(int nonterminal_number, std::vector<std::vector<Symbol>> v) : producer(nonterminal_number), conjunction(v) {}
+  Production(ProductionType type, int nonterminal_number, std::vector<std::vector<Symbol>> v) : type(type), producer(nonterminal_number), conjunction(v) {}
+
 };
 
 #endif  // GRAMMAR_NORMALISATION_GRAMMAR_TYPES_H_
