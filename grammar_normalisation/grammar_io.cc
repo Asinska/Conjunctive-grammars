@@ -6,7 +6,9 @@
 #include "grammar_types.h"
 #include "symbol_table.h"
 
-#define EMPTY_STRING_SYM "eps"
+namespace {
+constexpr std::string_view kEmptyStringSym = "eps";
+}  // namespace
 
 GrammarIO::GrammarIO() {}
 
@@ -70,7 +72,7 @@ bool GrammarIO::ReadProduction(std::vector<Production> &productions,
         } else if (symbol_table.IsTerminal(symbol)) {
           conjunct.push_back(Symbol(SymbolType::kTerminal,
                                     symbol_table.GetTerminalId(symbol)));
-        } else if (symbol == EMPTY_STRING_SYM) {
+        } else if (symbol == kEmptyStringSym) {
           conjunct.push_back(Symbol(SymbolType::kEpsilon));
         } else {
           Error(production_error + "Unknown symbol");
@@ -104,8 +106,7 @@ bool GrammarIO::ReadProduction(std::vector<Production> &productions,
   return true;
 }
 
-void GrammarIO::ReadNonterminals(int &start_symbol,
-                                 SymbolTable &symbol_table) {
+void GrammarIO::ReadNonterminals(int &start_symbol, SymbolTable &symbol_table) {
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() == 0) {
     Error("Expected at least one nonterminal symbol.");
@@ -152,7 +153,7 @@ void GrammarIO::PrintProductions(std::vector<Production> &productions,
         } else if (symbol.type == SymbolType::kTerminal) {
           std::cout << symbol_table.GetTerminalName(symbol.value) << ' ';
         } else {
-          std::cout << EMPTY_STRING_SYM << ' ';
+          std::cout << kEmptyStringSym << ' ';
         }
       }
     }
