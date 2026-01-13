@@ -21,16 +21,15 @@ class ConjunctiveGrammar {
  private:
   int start_symbol_;
   bool is_normalised_;
-  int nonterminals_cnt_, terminals_cnt_;
   GrammarIO grammar_io_;
   SymbolTable symbol_table_;
 
   std::vector<Production> productions_;
   std::vector<bool> is_nullable_;
   std::vector<int> terminal_to_producer_;
-  std::map<std::pair<int, int>, int> nonterminal_pair_to_producer;
+  std::map<std::pair<int, int>, int> nonterminal_pair_to_producer_;
 
-  void Init();
+  int NonterminalsCnt();
   void EliminateMixedProductions();
   void FindNullableSet();
   void SubstituteStartSymbol();

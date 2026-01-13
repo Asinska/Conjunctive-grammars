@@ -12,9 +12,9 @@
 class GrammarIO {
  public:
   GrammarIO();
-  void Read(int &nonterminals_cnt, int &terminals_cnt, int &start_symbol,
+  void Read(int &start_symbol,
             std::vector<Production> &productions, SymbolTable &symbol_table);
-  void Print(int &nonterminals_cnt, int &terminals_cnt, int &start_symbol,
+  void Print(int &start_symbol,
              std::vector<Production> &productions, SymbolTable &symbol_table);
 
  private:
@@ -22,13 +22,13 @@ class GrammarIO {
   void Error(std::string error_message);
   bool ReadProduction(std::vector<Production> &productions,
                       SymbolTable &symbol_table);
-  void ReadNonterminals(int &nonterminals_cnt, int &start_symbol,
+  void ReadNonterminals(int &start_symbol,
                         SymbolTable &symbol_table);
-  void ReadTerminals(int &terminals_cnt, SymbolTable &symbol_table);
+  void ReadTerminals(SymbolTable &symbol_table);
   void PrintProductions(std::vector<Production> &productions,
                         SymbolTable &symbol_table);
-  void PrintTerminals(int &terminals_cnt, SymbolTable &symbol_table);
-  void PrintNonterminals(int &nonterminals_cnt, int &start_symbol,
+  void PrintTerminals(SymbolTable &symbol_table);
+  void PrintNonterminals(int &start_symbol,
                          SymbolTable &symbol_table);
 };
 

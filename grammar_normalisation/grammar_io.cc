@@ -10,20 +10,18 @@
 
 GrammarIO::GrammarIO() {}
 
-void GrammarIO::Read(int &nonterminals_cnt, int &terminals_cnt,
-                     int &start_symbol, std::vector<Production> &productions,
+void GrammarIO::Read(int &start_symbol, std::vector<Production> &productions,
                      SymbolTable &symbol_table) {
-  ReadNonterminals(nonterminals_cnt, start_symbol, symbol_table);
-  ReadTerminals(terminals_cnt, symbol_table);
+  ReadNonterminals(start_symbol, symbol_table);
+  ReadTerminals(symbol_table);
   while (ReadProduction(productions, symbol_table))
     ;
 }
 
-void GrammarIO::Print(int &nonterminals_cnt, int &terminals_cnt,
-                      int &start_symbol, std::vector<Production> &productions,
+void GrammarIO::Print(int &start_symbol, std::vector<Production> &productions,
                       SymbolTable &symbol_table) {
-  PrintNonterminals(nonterminals_cnt, start_symbol, symbol_table);
-  PrintTerminals(terminals_cnt, symbol_table);
+  PrintNonterminals(start_symbol, symbol_table);
+  PrintTerminals(symbol_table);
   PrintProductions(productions, symbol_table);
 }
 
@@ -56,16 +54,6 @@ bool GrammarIO::ReadProduction(std::vector<Production> &productions,
           "Production should consist of nonterminal symbol, arrow and positive "
           "number of conjuncts.");
   }
-  // if (line.size() == 3) {
-  //     if (line[2] == EMPTY_STRING_SYM) { //A -> ε
-  //         nullable[nt_symbols_to_numbers[line[0]]] = true;
-  //         return true;
-  //     }
-  //     if (is_terminal(line[2])) { //A -> a
-  //         terminal_productions.push_back(Production(nt_symbols_to_numbers[line[0]],
-  //         {{t_symbols_to_numbers[line[2]]}})); return true;
-  //     }
-  // }
 
   int producer = symbol_table.GetNonterminalId(line[0]);
   int it = 2;
@@ -116,7 +104,7 @@ bool GrammarIO::ReadProduction(std::vector<Production> &productions,
   return true;
 }
 
-void GrammarIO::ReadNonterminals(int &nonterminals_cnt, int &start_symbol,
+void GrammarIO::ReadNonterminals(int &start_symbol,
                                  SymbolTable &symbol_table) {
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() == 0) {
@@ -131,11 +119,10 @@ void GrammarIO::ReadNonterminals(int &nonterminals_cnt, int &start_symbol,
     if (start_symbol == -1) {
       start_symbol = symbol_table.GetNonterminalId(symbol);
     }
-    // nonterminals_cnt++;
   }
 }
 
-void GrammarIO::ReadTerminals(int &terminals_cnt, SymbolTable &symbol_table) {
+void GrammarIO::ReadTerminals(SymbolTable &symbol_table) {
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() == 0) {
     Error("Expected at least one terminal symbol.");
@@ -146,7 +133,6 @@ void GrammarIO::ReadTerminals(int &terminals_cnt, SymbolTable &symbol_table) {
     if (symbol_table.IsTerminal(symbol))
       Error("Terminal symbols should be pairwise distinct.");
     symbol_table.AddTerminal(symbol);
-    // terminals_cnt++;
   }
 }
 
@@ -174,14 +160,14 @@ void GrammarIO::PrintProductions(std::vector<Production> &productions,
   }
 }
 
-void GrammarIO::PrintTerminals(int &terminals_cnt, SymbolTable &symbol_table) {
+void GrammarIO::PrintTerminals(SymbolTable &symbol_table) {
   for (int i = 0; i < symbol_table.GetTerminalCount(); i++) {
     std::cout << symbol_table.GetTerminalName(i) << ' ';
   }
   std::cout << '\n';
 }
 
-void GrammarIO::PrintNonterminals(int &nonterminals_cnt, int &start_symbol,
+void GrammarIO::PrintNonterminals(int &start_symbol,
                                   SymbolTable &symbol_table) {
   std::cout << symbol_table.GetNonterminalName(start_symbol) << ' ';
   for (int i = 0; i < symbol_table.GetNonterminalCount(); i++) {
@@ -190,5 +176,3 @@ void GrammarIO::PrintNonterminals(int &nonterminals_cnt, int &start_symbol,
   }
   std::cout << '\n';
 }
-
-// void GrammarIO::IntroduceNewNonterminal() {}
