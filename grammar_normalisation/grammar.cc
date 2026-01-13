@@ -24,6 +24,7 @@ void ConjunctiveGrammar::Normalise() {
   EliminateEpsilonConjuncts();
   EliminateLongConjuncts();
   EliminateUnitConjuncts();
+  reverse(productions_.begin(), productions_.end());
 }
 
 // bool ConjunctiveGrammar::IsNormal() {
