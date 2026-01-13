@@ -1,9 +1,10 @@
 #include "symbol_names_generator.h"
 
-#include <string>
 #include <algorithm>
+#include <string>
 
-SymbolNamesGenerator::SymbolNamesGenerator() : idx_(0), current_length_(1), current_symbols_cnt(kAlphabetSize) {}
+SymbolNamesGenerator::SymbolNamesGenerator()
+    : idx_(0), current_length_(1), current_symbols_cnt(kAlphabetSize) {}
 
 std::string SymbolNamesGenerator::Generate() {
   std::string symbol_name = "";

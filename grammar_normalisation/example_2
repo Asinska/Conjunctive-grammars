@@ -1,24 +1,10 @@
 S A B C D E
 a b c
 S -> C & D
-C -> a C a 
-C -> a C b
-C -> b C a 
-C -> b C b 
+C -> a C a | a C b | b C a
+D -> a A & a D | b B & b D | c E 
+A -> a A a | a A b | b A a | b A b | c E a
+B -> a B a | a B b | b B a | b B b | c E b
+E -> a E | b E | eps
 C -> c 
-D -> a A & a D 
-D -> b B & b D 
-D -> c E 
-A -> a A a 
-A -> a A b 
-A -> b A a 
-A -> b A b 
-A -> c E a
-B -> a B a 
-B -> a B b 
-B -> b B a 
-B -> b B b 
-B -> c E b 
-E -> a E 
-E -> b E 
-E -> eps
+C -> b C b

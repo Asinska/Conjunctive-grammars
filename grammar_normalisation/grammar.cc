@@ -241,7 +241,8 @@ Production ConjunctiveGrammar::MergeSortedConjuncts(Production &a,
       if (b.conjunction[it_b] == a.conjunction[it_a]) it_a++;
       new_conjunction.push_back(b.conjunction[it_b++]);
     } else {
-      if (a.conjunction[it_a] == std::vector<Symbol>{Symbol(SymbolType::kNonterminal, b.producer)})
+      if (a.conjunction[it_a] ==
+          std::vector<Symbol>{Symbol(SymbolType::kNonterminal, b.producer)})
         it_a++;
       else
         new_conjunction.push_back(a.conjunction[it_a++]);
@@ -309,22 +310,22 @@ void ConjunctiveGrammar::SortProductions() {
     }
   }
 
-
   std::vector<std::vector<std::pair<int, std::vector<Symbol>>>> sorting_table(
       symbol_table_.GetNonterminalCount());
   std::vector<std::pair<int, std::vector<Symbol>>> unit_conjuncts;
   for (auto conjunct : all_nonterminal_conjuncts) {
-    if ((int)conjunct.second.size() == 1) unit_conjuncts.push_back(conjunct);
-    else sorting_table[conjunct.second.back().value].push_back(conjunct);
+    if ((int)conjunct.second.size() == 1)
+      unit_conjuncts.push_back(conjunct);
+    else
+      sorting_table[conjunct.second.back().value].push_back(conjunct);
   }
   all_nonterminal_conjuncts.clear();
-  for (auto conjunct: unit_conjuncts) {
-        all_nonterminal_conjuncts.push_back(conjunct);
+  for (auto conjunct : unit_conjuncts) {
+    all_nonterminal_conjuncts.push_back(conjunct);
   }
   for (int i = 0; i < symbol_table_.GetNonterminalCount(); i++) {
     for (auto conjunct : sorting_table[i]) {
-       all_nonterminal_conjuncts.push_back(conjunct);
-
+      all_nonterminal_conjuncts.push_back(conjunct);
     }
     sorting_table[i].clear();
   }
@@ -348,7 +349,8 @@ void ConjunctiveGrammar::SortProductions() {
 void ConjunctiveGrammar::EliminateUnitConjuncts() {
   SortProductions();
   std::vector<Production> new_productions;
-  std::vector<int> nonterminals_productions_positions(symbol_table_.GetNonterminalCount());
+  std::vector<int> nonterminals_productions_positions(
+      symbol_table_.GetNonterminalCount());
   for (int i = 0; i < (int)productions_.size(); i++) {
     Production &production = productions_[i];
     if (i == 0 || production.producer != productions_[i - 1].producer) {
