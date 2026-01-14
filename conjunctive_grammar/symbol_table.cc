@@ -1,5 +1,8 @@
 #include "conjunctive_grammar/symbol_table.h"
 
+
+namespace conjunctive_grammar{
+
 bool SymbolTable::IsNonterminal(const std::string &symbol) {
     return nonterminal_to_id_.find(symbol) != nonterminal_to_id_.end();
 }
@@ -45,4 +48,6 @@ int SymbolTable::GetNonterminalCount() {
 
 int SymbolTable::GetTerminalCount() {
     return terminals_.size();
+}
+
 }

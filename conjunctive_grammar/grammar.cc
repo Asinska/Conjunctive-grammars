@@ -8,6 +8,9 @@
 #include "conjunctive_grammar/grammar_io.h"
 #include "conjunctive_grammar/grammar_types.h"
 
+namespace conjunctive_grammar{
+
+
 ConjunctiveGrammar::ConjunctiveGrammar() {
   grammar_io_ = GrammarIO();
 }
@@ -36,7 +39,7 @@ void ConjunctiveGrammar::Print() {
                     productions_, symbol_table_);
 }
 
-int ConjunctiveGrammar::NonterminalsCnt() {
+int ConjunctiveGrammar::GetNonterminalsCnt() {
   return symbol_table_.GetNonterminalCount();
 }
 
@@ -77,9 +80,9 @@ void ConjunctiveGrammar::EliminateMixedProductions() {
 }
 
 void ConjunctiveGrammar::FindNullableSet() {
-  is_nullable_.resize(NonterminalsCnt());
+  is_nullable_.resize(GetNonterminalsCnt());
   std::vector<std::vector<int>> appears_in_production(
-      NonterminalsCnt());
+      GetNonterminalsCnt());
   std::vector<int> degree(productions_.size());
   for (int i = 0; i < (int)productions_.size(); i++) {
     if (productions_[i].type == ProductionType::kEpsilon) {
@@ -95,7 +98,7 @@ void ConjunctiveGrammar::FindNullableSet() {
     }
   }
   std::queue<int> nullable;
-  for (int i = 0; i < NonterminalsCnt(); i++) {
+  for (int i = 0; i < GetNonterminalsCnt(); i++) {
     if (is_nullable_[i]) {
       nullable.push(i);
     }
@@ -134,7 +137,7 @@ void ConjunctiveGrammar::FindNullableSet() {
     }
   }
   productions_ = new_productions;
-  // for (int i = 0; i < NonterminalsCnt(); i++) {
+  // for (int i = 0; i < GetNonterminalsCnt(); i++) {
   //   if (is_nullable_[i]) std::cout << i << ' ';
   // }
 }
@@ -287,12 +290,12 @@ void ConjunctiveGrammar::GenerateProductionsBySubstitution(
 
 void ConjunctiveGrammar::SortProductions() {
   std::vector<std::vector<int>> nonterminal_productions_idxs(
-      NonterminalsCnt());
+      GetNonterminalsCnt());
   for (int i = 0; i < (int)productions_.size(); i++) {
     nonterminal_productions_idxs[productions_[i].producer].push_back(i);
   }
   std::vector<Production> new_productions;
-  for (int i = 0; i < NonterminalsCnt(); i++) {
+  for (int i = 0; i < GetNonterminalsCnt(); i++) {
     for (int idx : nonterminal_productions_idxs[i]) {
       new_productions.push_back(productions_[idx]);
     }
@@ -311,7 +314,7 @@ void ConjunctiveGrammar::SortProductions() {
   }
 
   std::vector<std::vector<std::pair<int, std::vector<Symbol>>>> sorting_table(
-      NonterminalsCnt());
+      GetNonterminalsCnt());
   std::vector<std::pair<int, std::vector<Symbol>>> unit_conjuncts;
   for (auto conjunct : all_nonterminal_conjuncts) {
     if ((int)conjunct.second.size() == 1)
@@ -323,7 +326,7 @@ void ConjunctiveGrammar::SortProductions() {
   for (auto conjunct : unit_conjuncts) {
     all_nonterminal_conjuncts.push_back(conjunct);
   }
-  for (int i = 0; i < NonterminalsCnt(); i++) {
+  for (int i = 0; i < GetNonterminalsCnt(); i++) {
     for (auto conjunct : sorting_table[i]) {
       all_nonterminal_conjuncts.push_back(conjunct);
     }
@@ -333,7 +336,7 @@ void ConjunctiveGrammar::SortProductions() {
   for (auto conjunct : all_nonterminal_conjuncts) {
     sorting_table[conjunct.second[0].value].push_back(conjunct);
   }
-  for (int i = 0; i < NonterminalsCnt(); i++) {
+  for (int i = 0; i < GetNonterminalsCnt(); i++) {
     for (auto conjunct : sorting_table[i]) {
       productions_[conjunct.first].conjunction.push_back(conjunct.second);
     }
@@ -350,7 +353,7 @@ void ConjunctiveGrammar::EliminateUnitConjuncts() {
   SortProductions();
   std::vector<Production> new_productions;
   std::vector<int> nonterminals_productions_positions(
-      NonterminalsCnt());
+      GetNonterminalsCnt());
   for (int i = 0; i < (int)productions_.size(); i++) {
     Production &production = productions_[i];
     if (i == 0 || production.producer != productions_[i - 1].producer) {
@@ -398,4 +401,6 @@ void ConjunctiveGrammar::EliminateUnitConjuncts() {
                                       nonterminals_productions_positions, 1);
   }
   productions_ = new_productions;
+}
+
 }

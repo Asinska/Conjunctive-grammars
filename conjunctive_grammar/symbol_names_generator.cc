@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <string>
-
+namespace conjunctive_grammar{
 SymbolNamesGenerator::SymbolNamesGenerator()
     : idx_(0), current_length_(1), current_symbols_cnt(kAlphabetSize) {}
 
@@ -23,4 +23,6 @@ std::string SymbolNamesGenerator::Generate() {
     idx_ = 0;
   }
   return symbol_name;
+}
+
 }

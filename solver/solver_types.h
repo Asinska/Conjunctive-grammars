@@ -2,7 +2,8 @@
 #define SOLVER_SOLVER_TYPES_H_
 
 #include <vector>
-
+namespace grammar_solver{
+  
 struct Nonterminal {
   bool produces_terminal = false;
   std::vector<char> v;
@@ -18,12 +19,14 @@ struct NonterminalPair {
   }
 };
 
-struct Production {
+struct SolverProduction {
   Nonterminal* producer;
   std::vector<std::pair<bool, NonterminalPair*>> conjunction;
-  Production(Nonterminal* nonterminal,
+  SolverProduction(Nonterminal* nonterminal,
              std::vector<std::pair<bool, NonterminalPair*>> conjunction)
       : producer(nonterminal), conjunction(conjunction) {}
 };
+
+}
 
 #endif  // SOLVER_SOLVER_TYPES_H_

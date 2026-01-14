@@ -10,6 +10,9 @@ namespace {
 constexpr std::string_view kEmptyStringSym = "eps";
 }  // namespace
 
+
+namespace conjunctive_grammar{
+
 GrammarIO::GrammarIO() {}
 
 void GrammarIO::Read(int &start_symbol, std::vector<Production> &productions,
@@ -176,4 +179,6 @@ void GrammarIO::PrintNonterminals(int &start_symbol,
     std::cout << symbol_table.GetNonterminalName(i) << ' ';
   }
   std::cout << '\n';
+}
+
 }

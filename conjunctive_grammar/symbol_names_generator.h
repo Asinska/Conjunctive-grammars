@@ -3,6 +3,9 @@
 
 #include <string>
 
+namespace conjunctive_grammar{
+
+
 class SymbolNamesGenerator {
  public:
   SymbolNamesGenerator();
@@ -14,5 +17,7 @@ class SymbolNamesGenerator {
   int current_length_;
   int current_symbols_cnt;
 };
+
+}
 
 #endif  // CONJUNCTIVE_GRAMMAR_SYMBOL_NAMES_GENERATOR_H_

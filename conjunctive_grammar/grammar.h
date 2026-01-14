@@ -8,7 +8,11 @@
 #include "conjunctive_grammar/grammar_io.h"
 #include "conjunctive_grammar/grammar_types.h"
 #include "conjunctive_grammar/symbol_names_generator.h"
-#include "conjunctive_grammar/symbol_table.h"
+#include "conjunctive_grammar/symbol_table.h"\
+
+
+namespace conjunctive_grammar{
+
 
 class ConjunctiveGrammar {
  public:
@@ -17,6 +21,11 @@ class ConjunctiveGrammar {
   void Normalise();
   // bool IsNormal();
   void Print();
+  int GetNonterminalsCnt();
+  int GetTerminalsCnt();
+  int GetStartSymbol();
+  std::vector<Production> GetProductions();
+
 
  private:
   int start_symbol_;
@@ -29,7 +38,6 @@ class ConjunctiveGrammar {
   std::vector<int> terminal_to_producer_;
   std::map<std::pair<int, int>, int> nonterminal_pair_to_producer_;
 
-  int NonterminalsCnt();
   void EliminateMixedProductions();
   void FindNullableSet();
   void SubstituteStartSymbol();
@@ -43,4 +51,5 @@ class ConjunctiveGrammar {
   void EliminateUnitConjuncts();
 };
 
+}
 #endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_H_

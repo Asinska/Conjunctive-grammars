@@ -7,6 +7,9 @@
 
 #include "conjunctive_grammar/symbol_names_generator.h"
 
+namespace conjunctive_grammar{
+
+
 class SymbolTable {
  public:
   bool IsNonterminal(const std::string &symbol_name);
@@ -27,6 +30,7 @@ class SymbolTable {
   SymbolNamesGenerator names_generator_;
 };
 
+}
 
 
 #endif  // GRAMMAR_NORMALISATION_SYMBOL_TABLE_H_ 

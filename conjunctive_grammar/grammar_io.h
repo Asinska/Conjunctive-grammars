@@ -9,6 +9,9 @@
 #include "conjunctive_grammar/symbol_names_generator.h"
 #include "conjunctive_grammar/symbol_table.h"
 
+namespace conjunctive_grammar{
+
+
 class GrammarIO {
  public:
   GrammarIO();
@@ -31,5 +34,6 @@ class GrammarIO {
   void PrintNonterminals(int &start_symbol,
                          SymbolTable &symbol_table);
 };
+}
 
 #endif  // CONJUNCTIVE_GRAMMMAR_GRAMMAR_IO_H_

@@ -4,6 +4,9 @@
 #include <compare>
 #include <vector>
 
+namespace conjunctive_grammar{
+  
+
 enum class SymbolType { kTerminal, kNonterminal, kEpsilon };
 
 struct Symbol {
@@ -26,5 +29,7 @@ struct Production {
              std::vector<std::vector<Symbol>> v)
       : type(type), producer(nonterminal_number), conjunction(v) {}
 };
+
+}
 
 #endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_TYPES_H_
