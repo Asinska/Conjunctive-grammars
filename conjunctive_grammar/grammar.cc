@@ -7,17 +7,14 @@
 
 #include "conjunctive_grammar/grammar_io.h"
 #include "conjunctive_grammar/grammar_types.h"
+#include "grammar.h"
 
-namespace conjunctive_grammar{
+namespace conjunctive_grammar {
 
-
-ConjunctiveGrammar::ConjunctiveGrammar() {
-  grammar_io_ = GrammarIO();
-}
+ConjunctiveGrammar::ConjunctiveGrammar() { grammar_io_ = GrammarIO(); }
 
 void ConjunctiveGrammar::Read() {
-  grammar_io_.Read(start_symbol_,
-                   productions_, symbol_table_);
+  grammar_io_.Read(start_symbol_, productions_, symbol_table_);
 }
 
 void ConjunctiveGrammar::Normalise() {
@@ -28,19 +25,27 @@ void ConjunctiveGrammar::Normalise() {
   EliminateLongConjuncts();
   EliminateUnitConjuncts();
   reverse(productions_.begin(), productions_.end());
+  is_normalised_ = true;
 }
 
-// bool ConjunctiveGrammar::IsNormal() {
-//   return is_normalised_;
-// }
+bool ConjunctiveGrammar::IsNormal() { return is_normalised_; }
 
 void ConjunctiveGrammar::Print() {
-  grammar_io_.Print(start_symbol_,
-                    productions_, symbol_table_);
+  grammar_io_.Print(start_symbol_, productions_, symbol_table_);
 }
 
 int ConjunctiveGrammar::GetNonterminalsCnt() {
   return symbol_table_.GetNonterminalCount();
+}
+
+int ConjunctiveGrammar::GetTerminalsCnt() {
+  return symbol_table_.GetTerminalCount();
+}
+
+int ConjunctiveGrammar::GetStartSymbol() { return start_symbol_; }
+
+std::vector<Production> ConjunctiveGrammar::GetProductions() {
+  return productions_;
 }
 
 void ConjunctiveGrammar::EliminateMixedProductions() {
@@ -81,8 +86,7 @@ void ConjunctiveGrammar::EliminateMixedProductions() {
 
 void ConjunctiveGrammar::FindNullableSet() {
   is_nullable_.resize(GetNonterminalsCnt());
-  std::vector<std::vector<int>> appears_in_production(
-      GetNonterminalsCnt());
+  std::vector<std::vector<int>> appears_in_production(GetNonterminalsCnt());
   std::vector<int> degree(productions_.size());
   for (int i = 0; i < (int)productions_.size(); i++) {
     if (productions_[i].type == ProductionType::kEpsilon) {
@@ -260,10 +264,10 @@ void ConjunctiveGrammar::GenerateProductionsBySubstitution(
   for (std::vector<Symbol> conjunct : production.conjunction) {
     if ((conjunct.size() == 1) &&
         (conjunct[0].type == SymbolType::kNonterminal) &&
-        (conjunct[0].value < production.producer || mode)) {
+        ((conjunct[0].value < production.producer) || mode)) {
       for (int i = nonterminals_productions_positions[conjunct[0].value];
-           i < (int)new_productions.size() &&
-           new_productions[i].producer == conjunct[0].value;
+           (i < (int)new_productions.size()) &&
+           (new_productions[i].producer == conjunct[0].value);
            i++) {
         GenerateProductionsBySubstitution(
             MergeSortedConjuncts(production, new_productions[i]),
@@ -352,8 +356,7 @@ void ConjunctiveGrammar::SortProductions() {
 void ConjunctiveGrammar::EliminateUnitConjuncts() {
   SortProductions();
   std::vector<Production> new_productions;
-  std::vector<int> nonterminals_productions_positions(
-      GetNonterminalsCnt());
+  std::vector<int> nonterminals_productions_positions(GetNonterminalsCnt());
   for (int i = 0; i < (int)productions_.size(); i++) {
     Production &production = productions_[i];
     if (i == 0 || production.producer != productions_[i - 1].producer) {
@@ -403,4 +406,4 @@ void ConjunctiveGrammar::EliminateUnitConjuncts() {
   productions_ = new_productions;
 }
 
-}
+}  // namespace conjunctive_grammar

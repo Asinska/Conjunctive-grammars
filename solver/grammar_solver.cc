@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+#include "grammar_solver.h"
 #include "solver/convolution.h"
 #include "solver/solver_types.h"
 
@@ -17,13 +18,59 @@ constexpr std::string_view kEmptyStringSym = "eps";
 
 namespace grammar_solver {
 
-GrammarSolver::GrammarSolver(conjunctive_grammar::ConjunctiveGrammar &grammar, int n) : n_(n), start_symbol_(nullptr) {
+GrammarSolver::GrammarSolver(conjunctive_grammar::ConjunctiveGrammar& grammar,
+                             int n)
+    : n_(n), start_symbol_(nullptr) {
+  for (int i = 0; i < grammar.GetNonterminalsCnt(); i++) {
+    nonterminals_.push_back(std::make_unique<Nonterminal>(n));
+  }
+  start_symbol_ = nonterminals_[grammar.GetStartSymbol()].get();
+
+  std::vector<conjunctive_grammar::Production> grammar_productions =
+      grammar.GetProductions();
+  for (conjunctive_grammar::Production production : grammar_productions) {
+    if (production.type == conjunctive_grammar::ProductionType::kEpsilon) {
+      nonterminals_[production.producer]->v[0] = 1;
+      continue;
+    } else if (production.type ==
+               conjunctive_grammar::ProductionType::kTerminal) {
+      nonterminals_[production.producer]->produces_terminal = true;
+      continue;
+    } else {
+      std::vector<std::pair<bool, NonterminalPair*>> list_of_pairs;
+      for (std::vector<conjunctive_grammar::Symbol> conjunct :
+           production.conjunction) {
+        std::pair<Nonterminal*, Nonterminal*> pair_of_nonterminals = {
+            nonterminals_[conjunct[0].value].get(),
+            nonterminals_[conjunct[1].value].get()};
+        if (nonterminal_pair_to_pointer_.find(pair_of_nonterminals) ==
+            nonterminal_pair_to_pointer_.end()) {
+          auto newpair = std::make_unique<NonterminalPair>(
+              pair_of_nonterminals.first, pair_of_nonterminals.second);
+          nonterminal_pair_to_pointer_[pair_of_nonterminals] = newpair.get();
+          nonterminal_pairs_.push_back(move(newpair));
+        }
+        list_of_pairs.push_back(
+            {true, nonterminal_pair_to_pointer_[pair_of_nonterminals]});
+      }
+      productions_.push_back(SolverProduction(
+          nonterminals_[production.producer].get(), list_of_pairs));
+    }
+  }
 }
 
-// void GrammarSolver::ParseInput() {
-//   ReadN();
-//   ReadGrammar();
-// }
+std::unique_ptr<GrammarSolver> GrammarSolver::Create(
+    conjunctive_grammar::ConjunctiveGrammar& grammar, int n) {
+  if (grammar.GetTerminalsCnt() != 1) {
+    std::cerr << "Cannot create solver for non-unary grammar.\n";
+    return nullptr;
+  }
+  if (!grammar.IsNormal()) {
+    std::cerr << "Cannot create solver for unnormalized grammar.\n";
+    return nullptr;
+  }
+  return std::unique_ptr<GrammarSolver>(new GrammarSolver(grammar, n));
+}
 
 void GrammarSolver::Solve() {
   for (const auto& nt : nonterminals_) {
@@ -55,117 +102,7 @@ void GrammarSolver::Solve() {
   }
 }
 
-// void GrammarSolver::PrintResult() {
-//   for (int i = 0; i <= n_; i++) {
-//     if (start_symbol_->v[i]) {
-//       std::cout << i << " ";
-//     }
-//   }
-//   std::cout << "\n";
-// }
-
-// bool GrammarSolver::IsNonterminal(std::string s) {
-//   return name_to_nonterminal_.find(s) != name_to_nonterminal_.end();
-// }
-
-// void GrammarSolver::ReadN() {
-//   std::string line;
-//   std::getline(std::cin, line);
-//   std::stringstream ss(line);
-//   if (!(ss >> n_)) {
-//     Error("Word's length must be a number.");
-//   }
-// }
-
-// void GrammarSolver::ReadNonterminals() {
-//   std::vector<std::string> line = GetTokenizedLine();
-//   if (line.size() == 0) {
-//     Error("Expected at least one nonterminal symbol.");
-//   }
-//   for (std::string s : line) {
-//     auto nonterminal_pointer = std::make_unique<Nonterminal>();
-//     Nonterminal* raw_ptr = nonterminal_pointer.get();
-//     if (start_symbol_ == nullptr) start_symbol_ = raw_ptr;
-//     nonterminals_.push_back(move(nonterminal_pointer));
-
-//     if (IsNonterminal(s)) {
-//       Error("Nonterminal symbols should be pairwise distinct.");
-//     }
-//     name_to_nonterminal_[s] = raw_ptr;
-//   }
-// }
-
-// void GrammarSolver::ReadTerminal() {
-//   std::vector<std::string> line = GetTokenizedLine();
-//   if (line.size() != 1) {
-//     Error("Exactly one terminal symbol expected.");
-//   }
-//   terminal_name_ = line[0];
-//   if (IsNonterminal(terminal_name_)) {
-//     Error("Terminal symbol appears in nonterminal symbols list.");
-//   }
-// }
-
-// bool GrammarSolver::ReadProduction() {
-//   std::vector<std::string> line = GetTokenizedLine();
-//   if (line.size() == 0) return false;
-//   if (line.size() < 3 || !IsNonterminal(line[0]) || line[1] != "->") {
-//     Error(
-//         "Production error: Production should consist of one nonterminal "
-//         "symbol, an arrow and at least one nonempty conjunct.");
-//   }
-//   if (line.size() == 3) {
-//     if (line[2] == kEmptyStringSym) {
-//       if (name_to_nonterminal_[line[0]] != start_symbol_) {
-//         Error(
-//             "Production error: Only start symbol should be able to produce "
-//             "empty word.");
-//       }
-//       name_to_nonterminal_[line[0]]->v[0] = true;
-//     } else if (line[2] == terminal_name_)
-//       name_to_nonterminal_[line[0]]->produces_terminal = true;
-//     else
-//       Error(
-//           "Production error: rules with one conjunct consisting of one symbol "
-//           "must be terminal productions or empty word productions.");
-//   } else {
-//     std::vector<std::pair<bool, NonterminalPair*>> v;
-//     for (int i = 2; i < (int)line.size(); i += 3) {
-//       bool positive_conjunct = true;
-//       if (line[i] == kNegSym) {
-//         positive_conjunct = false;
-//         i++;
-//       }
-//       if (i + 1 >= (int)line.size() ||
-//           (i + 2 != (int)line.size() && line[i + 2] != "&")) {
-//         Error("Production error.");
-//       }
-//       if (!IsNonterminal(line[i]) || !IsNonterminal(line[i])) {
-//         Error("Production error: unknown nonterminal symbols.");
-//       }
-//       std::pair<Nonterminal*, Nonterminal*> pair_of_nonterminals = {
-//           name_to_nonterminal_[line[i]], name_to_nonterminal_[line[i + 1]]};
-//       if (nonterminal_pair_to_pointer_.find(pair_of_nonterminals) ==
-//           nonterminal_pair_to_pointer_.end()) {
-//         auto newpair = std::make_unique<NonterminalPair>(
-//             pair_of_nonterminals.first, pair_of_nonterminals.second);
-//         nonterminal_pair_to_pointer_[pair_of_nonterminals] = newpair.get();
-//         nonterminal_pairs_.push_back(move(newpair));
-//       }
-//       v.push_back({positive_conjunct,
-//                    nonterminal_pair_to_pointer_[pair_of_nonterminals]});
-//     }
-//     productions_.push_back(Production(name_to_nonterminal_[line[0]], v));
-//   }
-//   return true;
-// }
-
-// void GrammarSolver::ReadGrammar() {
-//   ReadNonterminals();
-//   ReadTerminal();
-//   while (ReadProduction())
-//     ;
-// }
+std::vector<char> GrammarSolver::GetResult() { return start_symbol_->v; }
 
 void GrammarSolver::EvaluatePair(NonterminalPair* nonterminal_pair, int i) {
   for (int k = 1; (k < i) && ((i % k) == 0); k <<= 1) {
@@ -185,21 +122,4 @@ void GrammarSolver::EvaluatePair(NonterminalPair* nonterminal_pair, int i) {
   }
 }
 
-// std::vector<std::string> GrammarSolver::GetTokenizedLine() {
-//   std::string line;
-//   getline(std::cin, line);
-//   std::stringstream ss(line);
-//   std::vector<std::string> tokens;
-//   std::string tmp;
-//   while (ss >> tmp) {
-//     tokens.push_back(tmp);
-//   }
-//   return tokens;
-// }
-
-// void GrammarSolver::Error(std::string error_message) {
-//   std::cerr << "Incorrect input error: " << error_message << '\n';
-//   exit(EXIT_FAILURE);
-// }
-
-}  // namespace conjunctive_grammar
+}  // namespace grammar_solver
