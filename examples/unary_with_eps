@@ -1,0 +1,7 @@
+5000
+A1 A2 A3 A6 one two
+a
+A1 -> A1 A3 & A2 A2 | a | eps
+A2 -> A1 A1 & A2 A6 | a a
+A3 -> A1 A2 & A6 A6 | a a a
+A6 -> A1 A2 & A3 A3
