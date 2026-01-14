@@ -1,4 +1,4 @@
-#include "grammar_solver.h"
+#include "solver/grammar_solver.h"
 
 #include <iostream>
 #include <memory>
@@ -7,8 +7,8 @@
 #include <utility>
 #include <vector>
 
-#include "convolutions.h"
-#include "grammar_types.h"
+#include "solver/convolution.h"
+#include "solver/solver_types.h"
 
 namespace {
 constexpr std::string_view kNegSym = "~";

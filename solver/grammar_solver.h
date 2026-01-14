@@ -1,12 +1,12 @@
-#ifndef PARSER_GRAMMAR_SOLVER_H_
-#define PARSER_GRAMMAR_SOLVER_H_
+#ifndef SOLVER_GRAMMAR_SOLVER_H_
+#define SOLVER_GRAMMAR_SOLVER_H_
 
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "grammar_types.h"
+#include "solver/solver_types.h"
 
 namespace conjunctive_grammar {
 
@@ -45,4 +45,4 @@ class GrammarSolver {
 
 }  // namespace conjunctive_grammar
 
-#endif  // PARSER_GRAMMAR_SOLVER_H_
+#endif  // SOLVER_GRAMMAR_SOLVER_H_

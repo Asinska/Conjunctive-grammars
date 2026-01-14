@@ -1,13 +1,13 @@
-#ifndef GRAMMAR_NORMALISATION_GRAMMAR_IO_H_
-#define GRAMMAR_NORMALISATION_GRAMMAR_IO_H_
+#ifndef CONJUNCTIVE_GRAMMMAR_GRAMMAR_IO_H_
+#define CONJUNCTIVE_GRAMMMAR_GRAMMAR_IO_H_
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "grammar_types.h"
-#include "symbol_names_generator.h"
-#include "symbol_table.h"
+#include "conjunctive_grammar/grammar_types.h"
+#include "conjunctive_grammar/symbol_names_generator.h"
+#include "conjunctive_grammar/symbol_table.h"
 
 class GrammarIO {
  public:
@@ -32,4 +32,4 @@ class GrammarIO {
                          SymbolTable &symbol_table);
 };
 
-#endif  // GRAMMAR_NORMALISATION_GRAMMAR_IO_H_
+#endif  // CONJUNCTIVE_GRAMMMAR_GRAMMAR_IO_H_

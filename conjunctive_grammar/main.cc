@@ -1,4 +1,4 @@
-#include "grammar.h"
+#include "conjunctive_grammar/grammar.h"
 
 int main() {
   ConjunctiveGrammar grammar = ConjunctiveGrammar();

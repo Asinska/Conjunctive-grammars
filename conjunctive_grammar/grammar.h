@@ -1,14 +1,14 @@
-#ifndef GRAMMAR_NORMALISATION_GRAMMAR_H_
-#define GRAMMAR_NORMALISATION_GRAMMAR_H_
+#ifndef CONJUNCTIVE_GRAMMAR_GRAMMAR_H_
+#define CONJUNCTIVE_GRAMMAR_GRAMMAR_H_
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include "grammar_io.h"
-#include "grammar_types.h"
-#include "symbol_names_generator.h"
-#include "symbol_table.h"
+#include "conjunctive_grammar/grammar_io.h"
+#include "conjunctive_grammar/grammar_types.h"
+#include "conjunctive_grammar/symbol_names_generator.h"
+#include "conjunctive_grammar/symbol_table.h"
 
 class ConjunctiveGrammar {
  public:
@@ -43,4 +43,4 @@ class ConjunctiveGrammar {
   void EliminateUnitConjuncts();
 };
 
-#endif  // GRAMMAR_NORMALISATION_GRAMMAR_H_
+#endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_H_

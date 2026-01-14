@@ -1,5 +1,5 @@
-#ifndef GRAMMAR_NORMALISATION_GRAMMAR_TYPES_H_
-#define GRAMMAR_NORMALISATION_GRAMMAR_TYPES_H_
+#ifndef CONJUNCTIVE_GRAMMAR_GRAMMAR_TYPES_H_
+#define CONJUNCTIVE_GRAMMAR_GRAMMAR_TYPES_H_
 
 #include <compare>
 #include <vector>
@@ -27,4 +27,4 @@ struct Production {
       : type(type), producer(nonterminal_number), conjunction(v) {}
 };
 
-#endif  // GRAMMAR_NORMALISATION_GRAMMAR_TYPES_H_
+#endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_TYPES_H_

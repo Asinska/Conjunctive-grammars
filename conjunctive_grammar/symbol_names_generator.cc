@@ -1,4 +1,4 @@
-#include "symbol_names_generator.h"
+#include "conjunctive_grammar/symbol_names_generator.h"
 
 #include <algorithm>
 #include <string>

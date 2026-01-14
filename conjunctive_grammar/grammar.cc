@@ -1,12 +1,12 @@
-#include "grammar.h"
+#include "conjunctive_grammar/grammar.h"
 
 #include <algorithm>
 #include <iostream>  // for debug
 #include <queue>
 #include <vector>
 
-#include "grammar_io.h"
-#include "grammar_types.h"
+#include "conjunctive_grammar/grammar_io.h"
+#include "conjunctive_grammar/grammar_types.h"
 
 ConjunctiveGrammar::ConjunctiveGrammar() {
   grammar_io_ = GrammarIO();

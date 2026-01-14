@@ -1,9 +1,7 @@
-#ifndef PARSER_GRAMMAR_TYPES_H_
-#define PARSER_GRAMMAR_TYPES_H_
+#ifndef SOLVER_SOLVER_TYPES_H_
+#define SOLVER_SOLVER_TYPES_H_
 
 #include <vector>
-
-#include "convolutions.h"
 
 struct Nonterminal {
   bool produces_terminal = false;
@@ -28,4 +26,4 @@ struct Production {
       : producer(nonterminal), conjunction(conjunction) {}
 };
 
-#endif  // PARSER_GRAMMAR_TYPES_H_
+#endif  // SOLVER_SOLVER_TYPES_H_

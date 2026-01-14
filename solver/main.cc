@@ -1,4 +1,4 @@
-#include "grammar_solver.h"
+#include "solver/grammar_solver.h"
 
 int main() {
   conjunctive_grammar::GrammarSolver grammar_solver =

@@ -1,10 +1,10 @@
-#include "grammar_io.h"
+#include "conjunctive_grammar/grammar_io.h"
 
 #include <iostream>
 #include <sstream>
 
-#include "grammar_types.h"
-#include "symbol_table.h"
+#include "conjunctive_grammar/grammar_types.h"
+#include "conjunctive_grammar/symbol_table.h"
 
 namespace {
 constexpr std::string_view kEmptyStringSym = "eps";

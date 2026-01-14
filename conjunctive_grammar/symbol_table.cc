@@ -1,4 +1,4 @@
-#include "symbol_table.h"
+#include "conjunctive_grammar/symbol_table.h"
 
 bool SymbolTable::IsNonterminal(const std::string &symbol) {
     return nonterminal_to_id_.find(symbol) != nonterminal_to_id_.end();
