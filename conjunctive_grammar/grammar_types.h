@@ -4,8 +4,7 @@
 #include <compare>
 #include <vector>
 
-namespace conjunctive_grammar{
-  
+namespace conjunctive_grammar {
 
 enum class SymbolType { kTerminal, kNonterminal, kEpsilon };
 
@@ -31,6 +30,6 @@ struct Production {
   auto operator<=>(const Production&) const = default;
 };
 
-}
+}  // namespace conjunctive_grammar
 
 #endif  // CONJUNCTIVE_GRAMMAR_GRAMMAR_TYPES_H_

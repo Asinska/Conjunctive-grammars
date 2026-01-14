@@ -1,14 +1,13 @@
 #ifndef GRAMMAR_NORMALISATION_SYMBOL_TABLE_H_
 #define GRAMMAR_NORMALISATION_SYMBOL_TABLE_H_
 
-#include <vector>
-#include <string>
 #include <map>
+#include <string>
+#include <vector>
 
 #include "conjunctive_grammar/symbol_names_generator.h"
 
-namespace conjunctive_grammar{
-
+namespace conjunctive_grammar {
 
 class SymbolTable {
  public:
@@ -30,7 +29,6 @@ class SymbolTable {
   SymbolNamesGenerator names_generator_;
 };
 
-}
+}  // namespace conjunctive_grammar
 
-
-#endif  // GRAMMAR_NORMALISATION_SYMBOL_TABLE_H_ 
+#endif  // GRAMMAR_NORMALISATION_SYMBOL_TABLE_H_

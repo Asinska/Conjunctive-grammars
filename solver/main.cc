@@ -1,17 +1,17 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
-#include "solver/grammar_solver.h"
 #include "conjunctive_grammar/grammar.h"
-
-
+#include "solver/grammar_solver.h"
 
 int main() {
-  int n; std::cin >> n;
+  int n;
+  std::cin >> n;
   std::string s;
   getline(std::cin, s);
-  conjunctive_grammar::ConjunctiveGrammar G = conjunctive_grammar::ConjunctiveGrammar();
+  conjunctive_grammar::ConjunctiveGrammar G =
+      conjunctive_grammar::ConjunctiveGrammar();
   G.Read();
   G.Normalise();
   G.Print();

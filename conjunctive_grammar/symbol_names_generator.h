@@ -3,8 +3,7 @@
 
 #include <string>
 
-namespace conjunctive_grammar{
-
+namespace conjunctive_grammar {
 
 class SymbolNamesGenerator {
  public:
@@ -18,6 +17,6 @@ class SymbolNamesGenerator {
   int current_symbols_cnt;
 };
 
-}
+}  // namespace conjunctive_grammar
 
 #endif  // CONJUNCTIVE_GRAMMAR_SYMBOL_NAMES_GENERATOR_H_
