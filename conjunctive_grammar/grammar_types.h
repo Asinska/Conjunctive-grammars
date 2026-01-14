@@ -28,6 +28,7 @@ struct Production {
   Production(ProductionType type, int nonterminal_number,
              std::vector<std::vector<Symbol>> v)
       : type(type), producer(nonterminal_number), conjunction(v) {}
+  auto operator<=>(const Production&) const = default;
 };
 
 }

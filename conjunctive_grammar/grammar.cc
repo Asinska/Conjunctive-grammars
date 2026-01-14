@@ -237,6 +237,15 @@ void ConjunctiveGrammar::EliminateLongConjuncts() {
   }
 }
 
+bool IsLoopProduction(Production &production) {
+  for (std::vector<Symbol> &conjunct: production.conjunction) {
+    if ((int)conjunct.size() == 1 && conjunct[0].type == SymbolType::kNonterminal && conjunct[0].value == production.producer){
+      return true;
+    }
+  }
+  return false;
+}
+
 Production ConjunctiveGrammar::MergeSortedConjuncts(Production &a,
                                                     Production &b) {
   std::vector<std::vector<Symbol>> new_conjunction;
@@ -289,7 +298,7 @@ void ConjunctiveGrammar::GenerateProductionsBySubstitution(
         return;
     }
   }
-  new_productions.push_back(production);
+  if (!IsLoopProduction(production)) new_productions.push_back(production);
 }
 
 void ConjunctiveGrammar::SortProductions() {
@@ -351,6 +360,7 @@ void ConjunctiveGrammar::SortProductions() {
                                              production.conjunction.end()),
                                  production.conjunction.end());
   }
+  productions_.erase(std::unique(productions_.begin(), productions_.end()), productions_.end());
 }
 
 void ConjunctiveGrammar::EliminateUnitConjuncts() {
@@ -367,43 +377,45 @@ void ConjunctiveGrammar::EliminateUnitConjuncts() {
       new_productions.push_back(production);
       continue;
     }
-    bool discard = false;
-    for (std::vector<Symbol> conjunct : production.conjunction) {
-      if ((int)conjunct.size() == 1 &&
-          conjunct[0].value == production.producer) {
-        discard = true;
-        break;
-      }
-    }
-    if (discard) continue;
+    // bool discard = false;
+    // for (std::vector<Symbol> conjunct : production.conjunction) {
+    //   if ((int)conjunct.size() == 1 &&
+    //       conjunct[0].value == production.producer) {
+    //     discard = true;
+    //     break;
+    //   }
+    // }
+    if (IsLoopProduction(production)) continue;
     GenerateProductionsBySubstitution(production, new_productions,
                                       nonterminals_productions_positions, 0);
   }
   productions_ = new_productions;
   new_productions.clear();
+  productions_.erase(std::unique(productions_.begin(), productions_.end()), productions_.end());
   for (int i = (int)productions_.size() - 1; i >= 0; i--) {
     Production &production = productions_[i];
     if (i == (int)productions_.size() - 1 ||
         production.producer != productions_[i + 1].producer)
       nonterminals_productions_positions[production.producer] =
           new_productions.size();
-    if (production.type != ProductionType::kNonterminal) {
+    if (production.type == ProductionType::kEpsilon || production.type == ProductionType::kTerminal) {
       new_productions.push_back(production);
       continue;
     }
-    bool discard = false;
-    for (std::vector<Symbol> conjunct : production.conjunction) {
-      if ((int)conjunct.size() == 1 &&
-          conjunct[0].value == production.producer) {
-        discard = true;
-        break;
-      }
-    }
-    if (discard) continue;
+    // bool discard = false;
+    // for (std::vector<Symbol> conjunct : production.conjunction) {
+    //   if ((int)conjunct.size() == 1 &&
+    //       conjunct[0].value == production.producer) {
+    //     discard = true;
+    //     break;
+    //   }
+    // }
+    // if (discard) continue;
     GenerateProductionsBySubstitution(production, new_productions,
                                       nonterminals_productions_positions, 1);
   }
   productions_ = new_productions;
+  productions_.erase(std::unique(productions_.begin(), productions_.end()), productions_.end());
 }
 
 }  // namespace conjunctive_grammar
