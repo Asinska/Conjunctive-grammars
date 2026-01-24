@@ -1,5 +1,4 @@
-5000
-A1 A2 A3 A6 one two
+A1 A2 A3 A6
 a
 A1 -> A1 A3 & A2 A2 | a
 A2 -> A1 A1 & A2 A6 | a a
