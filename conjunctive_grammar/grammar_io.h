@@ -14,22 +14,22 @@ namespace conjunctive_grammar {
 class GrammarIO {
  public:
   GrammarIO();
-  bool Read(int &start_symbol, std::vector<Production> &productions,
+  bool Read(std::istream &input, int &start_symbol, std::vector<Production> &productions,
             SymbolTable &symbol_table);
-  void Print(int &start_symbol, std::vector<Production> &productions,
+  void Print(std::ostream &output, int &start_symbol, std::vector<Production> &productions,
              SymbolTable &symbol_table);
 
  private:
-  std::vector<std::string> GetTokenizedLine();
+  std::vector<std::string> GetTokenizedLine(std::istream &input);
   int Error(std::string error_message);
-  int ReadProduction(std::vector<Production> &productions,
+  int ReadProduction(std::istream &input, std::vector<Production> &productions,
                      SymbolTable &symbol_table);
-  int ReadNonterminals(int &start_symbol, SymbolTable &symbol_table);
-  int ReadTerminals(SymbolTable &symbol_table);
-  void PrintProductions(std::vector<Production> &productions,
+  int ReadNonterminals(std::istream &input, int &start_symbol, SymbolTable &symbol_table);
+  int ReadTerminals(std::istream &input, SymbolTable &symbol_table);
+  void PrintProductions(std::ostream &output, std::vector<Production> &productions,
                         SymbolTable &symbol_table);
-  void PrintTerminals(SymbolTable &symbol_table);
-  void PrintNonterminals(int &start_symbol, SymbolTable &symbol_table);
+  void PrintTerminals(std::ostream &output, SymbolTable &symbol_table);
+  void PrintNonterminals(std::ostream &output, int &start_symbol, SymbolTable &symbol_table);
 };
 }  // namespace conjunctive_grammar
 

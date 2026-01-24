@@ -17,8 +17,8 @@ ConjunctiveGrammar::ConjunctiveGrammar() {
   is_initialised = false;
 }
 
-bool ConjunctiveGrammar::Read() {
-  if (!grammar_io_.Read(start_symbol_, productions_, symbol_table_)) {
+bool ConjunctiveGrammar::Read(std::istream &input) {
+  if (!grammar_io_.Read(input, start_symbol_, productions_, symbol_table_)) {
     std::cerr << "Failed to read grammar.\n";
     return false;
   } else {
@@ -79,12 +79,12 @@ bool ConjunctiveGrammar::IsNormal() {
   return true;
 }
 
-void ConjunctiveGrammar::Print() {
+void ConjunctiveGrammar::Print(std::ostream &output) {
   if (!is_initialised) {
     std::cerr << "Cannot print uninitialised grammar. Call 'Read' first.\n";
     return;
   }
-  grammar_io_.Print(start_symbol_, productions_, symbol_table_);
+  grammar_io_.Print(output, start_symbol_, productions_, symbol_table_);
 }
 
 int ConjunctiveGrammar::GetNonterminalsCnt() {

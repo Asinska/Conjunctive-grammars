@@ -15,10 +15,10 @@ namespace conjunctive_grammar {
 class ConjunctiveGrammar {
  public:
   ConjunctiveGrammar();
-  bool Read();
+  bool Read(std::istream &input);
   void Normalise();
   bool IsNormal();
-  void Print();
+  void Print(std::ostream &output);
   int GetNonterminalsCnt();
   int GetTerminalsCnt();
   int GetStartSymbol();

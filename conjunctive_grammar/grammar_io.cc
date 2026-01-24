@@ -14,27 +14,27 @@ namespace conjunctive_grammar {
 
 GrammarIO::GrammarIO() {}
 
-bool GrammarIO::Read(int &start_symbol, std::vector<Production> &productions,
+bool GrammarIO::Read(std::istream &input, int &start_symbol, std::vector<Production> &productions,
                      SymbolTable &symbol_table) {
-  if (ReadNonterminals(start_symbol, symbol_table) == -1) return false;
-  if (ReadTerminals(symbol_table) == -1) return false;
+  if (ReadNonterminals(input, start_symbol, symbol_table) == -1) return false;
+  if (ReadTerminals(input, symbol_table) == -1) return false;
   int status;
-  while ((status = ReadProduction(productions, symbol_table)) == 1)
+  while ((status = ReadProduction(input, productions, symbol_table)) == 1)
     ;
   if (status == -1) return false;
   return true;
 }
 
-void GrammarIO::Print(int &start_symbol, std::vector<Production> &productions,
+void GrammarIO::Print(std::ostream &output, int &start_symbol, std::vector<Production> &productions,
                       SymbolTable &symbol_table) {
-  PrintNonterminals(start_symbol, symbol_table);
-  PrintTerminals(symbol_table);
-  PrintProductions(productions, symbol_table);
+  PrintNonterminals(output, start_symbol, symbol_table);
+  PrintTerminals(output, symbol_table);
+  PrintProductions(output, productions, symbol_table);
 }
 
-std::vector<std::string> GrammarIO::GetTokenizedLine() {
+std::vector<std::string> GrammarIO::GetTokenizedLine(std::istream &input) {
   std::string line;
-  getline(std::cin, line);
+  getline(input, line);
   std::stringstream ss(line);
   std::vector<std::string> tokens;
   std::string tmp;
@@ -49,11 +49,11 @@ int GrammarIO::Error(std::string error_message) {
   return -1;
 }
 
-int GrammarIO::ReadProduction(std::vector<Production> &productions,
+int GrammarIO::ReadProduction(std::istream &input, std::vector<Production> &productions,
                               SymbolTable &symbol_table) {
   std::string production_error = "Invalid format of production: ";
 
-  std::vector<std::string> line = GetTokenizedLine();
+  std::vector<std::string> line = GetTokenizedLine(input);
   if (line.size() == 0) return 0;
   if (line.size() < 3 || !symbol_table.IsNonterminal(line[0]) ||
       line[1] != "->") {
@@ -112,8 +112,8 @@ int GrammarIO::ReadProduction(std::vector<Production> &productions,
   return 1;
 }
 
-int GrammarIO::ReadNonterminals(int &start_symbol, SymbolTable &symbol_table) {
-  std::vector<std::string> line = GetTokenizedLine();
+int GrammarIO::ReadNonterminals(std::istream &input, int &start_symbol, SymbolTable &symbol_table) {
+  std::vector<std::string> line = GetTokenizedLine(input);
   if (line.size() == 0) {
     return Error("Expected at least one nonterminal symbol.");
   }
@@ -130,8 +130,8 @@ int GrammarIO::ReadNonterminals(int &start_symbol, SymbolTable &symbol_table) {
   return 1;
 }
 
-int GrammarIO::ReadTerminals(SymbolTable &symbol_table) {
-  std::vector<std::string> line = GetTokenizedLine();
+int GrammarIO::ReadTerminals(std::istream &input, SymbolTable &symbol_table) {
+  std::vector<std::string> line = GetTokenizedLine(input);
   if (line.size() == 0) {
     return Error("Expected at least one terminal symbol.");
   }
@@ -145,45 +145,45 @@ int GrammarIO::ReadTerminals(SymbolTable &symbol_table) {
   return 1;
 }
 
-void GrammarIO::PrintProductions(std::vector<Production> &productions,
+void GrammarIO::PrintProductions(std::ostream &output, std::vector<Production> &productions,
                                  SymbolTable &symbol_table) {
   for (Production &production : productions) {
-    std::cout << symbol_table.GetNonterminalName(production.producer) << " -> ";
+    output << symbol_table.GetNonterminalName(production.producer) << " -> ";
     bool first_conjunct = true;
     for (std::vector<Symbol> &conjunct : production.conjunction) {
       if (!first_conjunct) {
-        std::cout << "& ";
+        output << "& ";
       }
       first_conjunct = false;
       for (Symbol &symbol : conjunct) {
         if (symbol.type == SymbolType::kNonterminal) {
-          std::cout << symbol_table.GetNonterminalName(symbol.value) << ' ';
+          output << symbol_table.GetNonterminalName(symbol.value) << ' ';
         } else if (symbol.type == SymbolType::kTerminal) {
-          std::cout << symbol_table.GetTerminalName(symbol.value) << ' ';
+          output << symbol_table.GetTerminalName(symbol.value) << ' ';
         } else {
-          std::cout << kEmptyStringSym << ' ';
+          output << kEmptyStringSym << ' ';
         }
       }
     }
-    std::cout << '\n';
+    output << '\n';
   }
 }
 
-void GrammarIO::PrintTerminals(SymbolTable &symbol_table) {
+void GrammarIO::PrintTerminals(std::ostream &output, SymbolTable &symbol_table) {
   for (int i = 0; i < symbol_table.GetTerminalCount(); i++) {
-    std::cout << symbol_table.GetTerminalName(i) << ' ';
+    output << symbol_table.GetTerminalName(i) << ' ';
   }
-  std::cout << '\n';
+  output << '\n';
 }
 
-void GrammarIO::PrintNonterminals(int &start_symbol,
+void GrammarIO::PrintNonterminals(std::ostream &output, int &start_symbol,
                                   SymbolTable &symbol_table) {
-  std::cout << symbol_table.GetNonterminalName(start_symbol) << ' ';
+  output << symbol_table.GetNonterminalName(start_symbol) << ' ';
   for (int i = 0; i < symbol_table.GetNonterminalCount(); i++) {
     if (i == start_symbol) continue;
-    std::cout << symbol_table.GetNonterminalName(i) << ' ';
+    output << symbol_table.GetNonterminalName(i) << ' ';
   }
-  std::cout << '\n';
+  output << '\n';
 }
 
 }  // namespace conjunctive_grammar
