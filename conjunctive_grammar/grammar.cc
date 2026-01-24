@@ -11,14 +11,17 @@
 
 namespace conjunctive_grammar {
 
-ConjunctiveGrammar::ConjunctiveGrammar() { grammar_io_ = GrammarIO(); }
+ConjunctiveGrammar::ConjunctiveGrammar() {
+  grammar_io_ = GrammarIO();
+  is_normalised_ = false;
+  is_initialised = false;
+}
 
 bool ConjunctiveGrammar::Read() {
   if (!grammar_io_.Read(start_symbol_, productions_, symbol_table_)) {
     std::cerr << "Failed to read grammar.\n";
     return false;
-  }
-  else {
+  } else {
     is_initialised = true;
     return true;
   }
@@ -39,7 +42,42 @@ void ConjunctiveGrammar::Normalise() {
   is_normalised_ = true;
 }
 
-bool ConjunctiveGrammar::IsNormal() { return is_normalised_; }
+bool ConjunctiveGrammar::IsNormal() {
+  if (!is_initialised) {
+    std::cerr << "Grammar is uninitialised. Call 'Read' first.\n";
+    return false;
+  }
+  if (is_normalised_) return true;
+  bool start_symbol_on_right = false, start_symbol_eps = false;
+  for (Production &production : productions_) {
+    if (production.conjunction.size() == 1 &&
+        production.conjunction[0].size() == 1) {
+      if (production.conjunction[0][0].type == SymbolType::kEpsilon) {
+        if (production.producer != start_symbol_)
+          return false;
+        else {
+          start_symbol_eps = true;
+          production.type = ProductionType::kEpsilon;
+        }
+      } else if (production.conjunction[0][0].type == SymbolType::kTerminal) {
+        production.type = ProductionType::kTerminal;
+      } else {
+        return false;
+      }
+    } else {
+      for (std::vector<Symbol> &conjunct : production.conjunction) {
+        if (conjunct.size() != 2) return false;
+        for (Symbol &symbol : conjunct) {
+          if (symbol.type != SymbolType::kNonterminal) return false;
+          if (symbol.value == start_symbol_) start_symbol_on_right = true;
+        }
+      }
+      production.type = ProductionType::kNonterminal;
+    }
+  }
+  if (start_symbol_eps && start_symbol_on_right) return false;
+  return true;
+}
 
 void ConjunctiveGrammar::Print() {
   if (!is_initialised) {

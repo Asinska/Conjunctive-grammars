@@ -23,7 +23,7 @@ class GrammarIO {
   std::vector<std::string> GetTokenizedLine();
   int Error(std::string error_message);
   int ReadProduction(std::vector<Production> &productions,
-                      SymbolTable &symbol_table);
+                     SymbolTable &symbol_table);
   int ReadNonterminals(int &start_symbol, SymbolTable &symbol_table);
   int ReadTerminals(SymbolTable &symbol_table);
   void PrintProductions(std::vector<Production> &productions,

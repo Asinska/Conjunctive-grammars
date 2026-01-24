@@ -50,16 +50,17 @@ int GrammarIO::Error(std::string error_message) {
 }
 
 int GrammarIO::ReadProduction(std::vector<Production> &productions,
-                               SymbolTable &symbol_table) {
+                              SymbolTable &symbol_table) {
   std::string production_error = "Invalid format of production: ";
 
   std::vector<std::string> line = GetTokenizedLine();
   if (line.size() == 0) return 0;
   if (line.size() < 3 || !symbol_table.IsNonterminal(line[0]) ||
       line[1] != "->") {
-    return Error(production_error +
-          "Production should consist of nonterminal symbol, arrow and positive "
-          "number of conjuncts.");
+    return Error(
+        production_error +
+        "Production should consist of nonterminal symbol, arrow and positive "
+        "number of conjuncts.");
   }
 
   int producer = symbol_table.GetNonterminalId(line[0]);

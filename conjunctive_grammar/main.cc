@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "conjunctive_grammar/grammar.h"
 
 int main() {
@@ -6,6 +8,10 @@ int main() {
   if (!grammar.Read()) {
     return 0;
   }
-  grammar.Normalise();
+  if (!grammar.IsNormal()) {
+    grammar.Normalise();
+  } else {
+    std::cout << "Grammar is already in normal form.\n";
+  }
   grammar.Print();
 }
