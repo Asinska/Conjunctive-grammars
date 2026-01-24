@@ -1,7 +1,7 @@
 #include "conjunctive_grammar/grammar.h"
 
 #include <algorithm>
-#include <iostream>  // for debug
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -13,11 +13,22 @@ namespace conjunctive_grammar {
 
 ConjunctiveGrammar::ConjunctiveGrammar() { grammar_io_ = GrammarIO(); }
 
-void ConjunctiveGrammar::Read() {
-  grammar_io_.Read(start_symbol_, productions_, symbol_table_);
+bool ConjunctiveGrammar::Read() {
+  if (!grammar_io_.Read(start_symbol_, productions_, symbol_table_)) {
+    std::cerr << "Failed to read grammar.\n";
+    return false;
+  }
+  else {
+    is_initialised = true;
+    return true;
+  }
 }
 
 void ConjunctiveGrammar::Normalise() {
+  if (!is_initialised) {
+    std::cerr << "Cannot normalise uninitialised grammar. Call 'Read' first.\n";
+    return;
+  }
   EliminateMixedProductions();
   FindNullableSet();
   SubstituteStartSymbol();
@@ -31,6 +42,10 @@ void ConjunctiveGrammar::Normalise() {
 bool ConjunctiveGrammar::IsNormal() { return is_normalised_; }
 
 void ConjunctiveGrammar::Print() {
+  if (!is_initialised) {
+    std::cerr << "Cannot print uninitialised grammar. Call 'Read' first.\n";
+    return;
+  }
   grammar_io_.Print(start_symbol_, productions_, symbol_table_);
 }
 

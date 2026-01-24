@@ -14,18 +14,18 @@ namespace conjunctive_grammar {
 class GrammarIO {
  public:
   GrammarIO();
-  void Read(int &start_symbol, std::vector<Production> &productions,
+  bool Read(int &start_symbol, std::vector<Production> &productions,
             SymbolTable &symbol_table);
   void Print(int &start_symbol, std::vector<Production> &productions,
              SymbolTable &symbol_table);
 
  private:
   std::vector<std::string> GetTokenizedLine();
-  void Error(std::string error_message);
-  bool ReadProduction(std::vector<Production> &productions,
+  int Error(std::string error_message);
+  int ReadProduction(std::vector<Production> &productions,
                       SymbolTable &symbol_table);
-  void ReadNonterminals(int &start_symbol, SymbolTable &symbol_table);
-  void ReadTerminals(SymbolTable &symbol_table);
+  int ReadNonterminals(int &start_symbol, SymbolTable &symbol_table);
+  int ReadTerminals(SymbolTable &symbol_table);
   void PrintProductions(std::vector<Production> &productions,
                         SymbolTable &symbol_table);
   void PrintTerminals(SymbolTable &symbol_table);

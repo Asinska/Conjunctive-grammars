@@ -15,7 +15,7 @@ namespace conjunctive_grammar {
 class ConjunctiveGrammar {
  public:
   ConjunctiveGrammar();
-  void Read();
+  bool Read();
   void Normalise();
   bool IsNormal();
   void Print();
@@ -23,6 +23,7 @@ class ConjunctiveGrammar {
   int GetTerminalsCnt();
   int GetStartSymbol();
   std::vector<Production> GetProductions();
+  bool is_initialised;
 
  private:
   int start_symbol_;

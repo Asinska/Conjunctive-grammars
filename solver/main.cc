@@ -12,7 +12,9 @@ int main() {
   getline(std::cin, s);
   conjunctive_grammar::ConjunctiveGrammar G =
       conjunctive_grammar::ConjunctiveGrammar();
-  G.Read();
+  if (!G.Read()) {
+    return 0;
+  }
   G.Normalise();
   G.Print();
   auto solver = grammar_solver::GrammarSolver::Create(G, n);
