@@ -1,10 +1,10 @@
-#include "conjunctive_grammar/grammar_io.h"
+#include "src/conjunctive_grammar/grammar_io.h"
 
 #include <iostream>
 #include <sstream>
 
-#include "conjunctive_grammar/grammar_types.h"
-#include "conjunctive_grammar/symbol_table.h"
+#include "src/conjunctive_grammar/grammar_types.h"
+#include "src/conjunctive_grammar/symbol_table.h"
 
 namespace {
 constexpr std::string_view kEmptyStringSym = "eps";
@@ -14,7 +14,8 @@ namespace conjunctive_grammar {
 
 GrammarIO::GrammarIO() {}
 
-bool GrammarIO::Read(std::istream &input, int &start_symbol, std::vector<Production> &productions,
+bool GrammarIO::Read(std::istream &input, int &start_symbol,
+                     std::vector<Production> &productions,
                      SymbolTable &symbol_table) {
   if (ReadNonterminals(input, start_symbol, symbol_table) == -1) return false;
   if (ReadTerminals(input, symbol_table) == -1) return false;
@@ -25,7 +26,8 @@ bool GrammarIO::Read(std::istream &input, int &start_symbol, std::vector<Product
   return true;
 }
 
-void GrammarIO::Print(std::ostream &output, int &start_symbol, std::vector<Production> &productions,
+void GrammarIO::Print(std::ostream &output, int &start_symbol,
+                      std::vector<Production> &productions,
                       SymbolTable &symbol_table) {
   PrintNonterminals(output, start_symbol, symbol_table);
   PrintTerminals(output, symbol_table);
@@ -49,7 +51,8 @@ int GrammarIO::Error(std::string error_message) {
   return -1;
 }
 
-int GrammarIO::ReadProduction(std::istream &input, std::vector<Production> &productions,
+int GrammarIO::ReadProduction(std::istream &input,
+                              std::vector<Production> &productions,
                               SymbolTable &symbol_table) {
   std::string production_error = "Invalid format of production: ";
 
@@ -112,7 +115,8 @@ int GrammarIO::ReadProduction(std::istream &input, std::vector<Production> &prod
   return 1;
 }
 
-int GrammarIO::ReadNonterminals(std::istream &input, int &start_symbol, SymbolTable &symbol_table) {
+int GrammarIO::ReadNonterminals(std::istream &input, int &start_symbol,
+                                SymbolTable &symbol_table) {
   std::vector<std::string> line = GetTokenizedLine(input);
   if (line.size() == 0) {
     return Error("Expected at least one nonterminal symbol.");
@@ -145,7 +149,8 @@ int GrammarIO::ReadTerminals(std::istream &input, SymbolTable &symbol_table) {
   return 1;
 }
 
-void GrammarIO::PrintProductions(std::ostream &output, std::vector<Production> &productions,
+void GrammarIO::PrintProductions(std::ostream &output,
+                                 std::vector<Production> &productions,
                                  SymbolTable &symbol_table) {
   for (Production &production : productions) {
     output << symbol_table.GetNonterminalName(production.producer) << " -> ";
@@ -169,7 +174,8 @@ void GrammarIO::PrintProductions(std::ostream &output, std::vector<Production> &
   }
 }
 
-void GrammarIO::PrintTerminals(std::ostream &output, SymbolTable &symbol_table) {
+void GrammarIO::PrintTerminals(std::ostream &output,
+                               SymbolTable &symbol_table) {
   for (int i = 0; i < symbol_table.GetTerminalCount(); i++) {
     output << symbol_table.GetTerminalName(i) << ' ';
   }

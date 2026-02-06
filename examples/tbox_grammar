@@ -1,0 +1,141 @@
+Start N_Prof_Happy N_Prof_Proud N_Student_Dr N_Student_Happy N_Student_Prof N_Student_Proud N_Proud_Happy N_Proud_Prof N_Proud_Proud N_Prof_Prof N_Prof_Student N_Proud_Dr N_Happy_Prof N_Happy_Student N_Dr_Prof N_Dr_Happy N_Happy_Proud N_Happy_Happy N_Happy_Dr N_Student_Student N_Proud_Student N_Dr_Dr N_Dr_Student N_Dr_Proud N_Prof_Dr
+c
+Start -> N_Prof_Happy
+N_Prof_Proud -> N_Student_Dr
+N_Student_Happy -> N_Student_Prof & N_Student_Proud
+N_Proud_Happy -> N_Proud_Prof & N_Proud_Proud
+N_Prof_Prof -> N_Prof_Prof N_Prof_Prof
+N_Prof_Prof -> N_Prof_Student N_Student_Prof
+N_Proud_Dr -> N_Proud_Proud N_Proud_Dr
+N_Happy_Prof -> N_Happy_Student N_Student_Prof
+N_Dr_Prof -> N_Dr_Happy N_Happy_Prof
+N_Happy_Prof -> N_Happy_Proud N_Proud_Prof
+N_Happy_Happy -> N_Happy_Prof N_Prof_Happy
+N_Happy_Dr -> N_Happy_Proud N_Proud_Dr
+N_Student_Student -> N_Student_Proud N_Proud_Student
+N_Happy_Student -> N_Happy_Proud N_Proud_Student
+N_Proud_Dr -> N_Proud_Dr N_Dr_Dr
+N_Proud_Student -> N_Proud_Proud N_Proud_Student
+N_Happy_Student -> N_Happy_Dr N_Dr_Student
+N_Happy_Proud -> N_Happy_Prof N_Prof_Proud
+N_Student_Proud -> N_Student_Happy N_Happy_Proud
+N_Proud_Dr -> N_Proud_Happy N_Happy_Dr
+N_Happy_Happy -> N_Happy_Student N_Student_Happy
+N_Proud_Happy -> N_Proud_Prof N_Prof_Happy
+N_Happy_Happy -> N_Happy_Proud N_Proud_Happy
+N_Dr_Student -> N_Dr_Prof N_Prof_Student
+N_Dr_Student -> N_Dr_Dr N_Dr_Student
+N_Happy_Happy -> N_Happy_Dr N_Dr_Happy
+N_Happy_Dr -> N_Happy_Student N_Student_Dr
+N_Dr_Happy -> N_Dr_Happy N_Happy_Happy
+N_Happy_Dr -> N_Happy_Dr N_Dr_Dr
+N_Dr_Prof -> N_Dr_Prof N_Prof_Prof
+N_Prof_Student -> N_Prof_Proud N_Proud_Student
+N_Student_Student -> eps
+N_Proud_Prof -> N_Proud_Dr N_Dr_Prof
+N_Dr_Dr -> N_Dr_Happy N_Happy_Dr
+N_Happy_Student -> N_Happy_Student N_Student_Student
+N_Proud_Student -> N_Proud_Dr N_Dr_Student
+N_Happy_Prof -> N_Happy_Prof N_Prof_Prof
+N_Dr_Happy -> N_Dr_Proud N_Proud_Happy
+N_Happy_Happy -> eps
+N_Prof_Dr -> N_Prof_Happy N_Happy_Dr
+N_Dr_Happy -> N_Dr_Student N_Student_Happy
+N_Student_Proud -> N_Student_Student N_Student_Proud
+N_Happy_Dr -> N_Happy_Happy N_Happy_Dr
+N_Student_Prof -> N_Student_Dr N_Dr_Prof
+N_Proud_Proud -> eps
+N_Happy_Student -> N_Happy_Prof N_Prof_Student
+N_Dr_Dr -> N_Dr_Proud N_Proud_Dr
+N_Happy_Proud -> N_Happy_Proud N_Proud_Proud
+N_Dr_Dr -> N_Dr_Student N_Student_Dr
+N_Dr_Proud -> N_Dr_Proud N_Proud_Proud
+N_Dr_Happy -> N_Dr_Dr N_Dr_Happy
+N_Dr_Proud -> N_Dr_Dr N_Dr_Proud
+N_Student_Proud -> N_Student_Dr N_Dr_Proud
+N_Happy_Student -> N_Happy_Happy N_Happy_Student
+N_Dr_Happy -> N_Dr_Prof N_Prof_Happy
+N_Prof_Prof -> eps
+N_Dr_Dr -> eps
+N_Prof_Prof -> c
+N_Happy_Proud -> N_Happy_Happy N_Happy_Proud
+N_Dr_Proud -> N_Dr_Happy N_Happy_Proud
+N_Student_Dr -> N_Student_Student N_Student_Dr
+N_Dr_Prof -> N_Dr_Proud N_Proud_Prof
+N_Student_Dr -> c c c
+N_Happy_Prof -> N_Happy_Dr N_Dr_Prof
+N_Proud_Dr -> N_Proud_Student N_Student_Dr
+N_Happy_Happy -> N_Happy_Happy N_Happy_Happy
+N_Dr_Dr -> N_Dr_Dr N_Dr_Dr
+N_Student_Proud -> N_Student_Proud N_Proud_Proud
+N_Happy_Dr -> N_Happy_Prof N_Prof_Dr
+N_Dr_Dr -> N_Dr_Prof N_Prof_Dr
+N_Proud_Student -> N_Proud_Happy N_Happy_Student
+N_Dr_Student -> N_Dr_Happy N_Happy_Student
+N_Dr_Proud -> N_Dr_Prof N_Prof_Proud
+N_Happy_Proud -> N_Happy_Student N_Student_Proud
+N_Dr_Prof -> N_Dr_Student N_Student_Prof
+N_Dr_Student -> N_Dr_Proud N_Proud_Student
+N_Dr_Prof -> N_Dr_Dr N_Dr_Prof
+N_Proud_Dr -> N_Proud_Prof N_Prof_Dr
+N_Proud_Happy -> N_Proud_Dr N_Dr_Happy
+N_Prof_Happy -> N_Prof_Prof & N_Prof_Proud
+N_Proud_Happy -> N_Proud_Happy N_Happy_Happy
+N_Prof_Dr -> N_Prof_Prof N_Prof_Dr
+N_Proud_Happy -> N_Proud_Proud N_Proud_Happy
+N_Proud_Happy -> N_Proud_Student N_Student_Happy
+N_Proud_Proud -> N_Proud_Dr N_Dr_Proud
+N_Prof_Prof -> N_Prof_Happy N_Happy_Prof
+N_Proud_Proud -> N_Proud_Happy N_Happy_Proud
+N_Prof_Happy -> N_Prof_Proud N_Proud_Happy
+N_Proud_Proud -> N_Proud_Proud N_Proud_Proud
+N_Proud_Proud -> N_Proud_Prof N_Prof_Proud
+N_Proud_Student -> N_Proud_Prof N_Prof_Student
+N_Proud_Prof -> N_Proud_Proud N_Proud_Prof
+N_Happy_Prof -> N_Happy_Happy N_Happy_Prof
+N_Proud_Prof -> N_Proud_Student N_Student_Prof
+N_Proud_Prof -> N_Proud_Prof N_Prof_Prof
+N_Proud_Student -> N_Proud_Student N_Student_Student
+N_Student_Dr -> N_Student_Dr N_Dr_Dr
+N_Student_Student -> N_Student_Prof N_Prof_Student
+N_Happy_Proud -> N_Happy_Dr N_Dr_Proud
+N_Prof_Proud -> N_Prof_Prof N_Prof_Proud
+N_Student_Dr -> N_Student_Happy N_Happy_Dr
+N_Student_Dr -> N_Student_Proud N_Proud_Dr
+N_Student_Dr -> N_Student_Prof N_Prof_Dr
+N_Happy_Happy -> N_Happy_Prof & N_Happy_Proud
+N_Prof_Prof -> N_Prof_Dr N_Dr_Prof
+N_Student_Happy -> N_Student_Dr N_Dr_Happy
+N_Student_Happy -> N_Student_Happy N_Happy_Happy
+N_Prof_Proud -> N_Prof_Student N_Student_Proud
+N_Dr_Student -> N_Dr_Student N_Student_Student
+N_Student_Happy -> N_Student_Proud N_Proud_Happy
+N_Student_Proud -> N_Student_Prof N_Prof_Proud
+N_Student_Happy -> N_Student_Student N_Student_Happy
+N_Student_Student -> N_Student_Dr N_Dr_Student
+N_Prof_Dr -> N_Prof_Dr N_Dr_Dr
+N_Prof_Proud -> N_Prof_Proud N_Proud_Proud
+N_Student_Student -> N_Student_Happy N_Happy_Student
+N_Prof_Dr -> N_Prof_Student N_Student_Dr
+N_Student_Student -> N_Student_Student N_Student_Student
+N_Student_Prof -> N_Student_Happy N_Happy_Prof
+N_Student_Prof -> N_Student_Proud N_Proud_Prof
+N_Prof_Prof -> N_Prof_Proud N_Proud_Prof
+N_Student_Prof -> N_Student_Student N_Student_Prof
+N_Student_Prof -> N_Student_Prof N_Prof_Prof
+N_Dr_Happy -> N_Dr_Prof & N_Dr_Proud
+N_Prof_Happy -> N_Prof_Happy N_Happy_Happy
+N_Prof_Student -> N_Prof_Happy N_Happy_Student
+N_Prof_Student -> N_Prof_Prof N_Prof_Student
+N_Prof_Happy -> N_Prof_Student N_Student_Happy
+N_Proud_Proud -> N_Proud_Student N_Student_Proud
+N_Prof_Happy -> N_Prof_Dr N_Dr_Happy
+N_Prof_Happy -> N_Prof_Prof N_Prof_Happy
+N_Proud_Prof -> N_Proud_Happy N_Happy_Prof
+N_Student_Happy -> N_Student_Prof N_Prof_Happy
+N_Prof_Dr -> N_Prof_Proud N_Proud_Dr
+N_Prof_Proud -> N_Prof_Dr N_Dr_Proud
+N_Prof_Proud -> N_Prof_Happy N_Happy_Proud
+N_Dr_Proud -> N_Dr_Student N_Student_Proud
+N_Prof_Student -> N_Prof_Dr N_Dr_Student
+N_Prof_Student -> N_Prof_Student N_Student_Student

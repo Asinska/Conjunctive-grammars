@@ -1,4 +1,4 @@
-#include "solver/convolution.h"
+#include "src/solver/convolution.h"
 
 #include <gmpxx.h>
 

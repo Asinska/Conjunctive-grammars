@@ -3,26 +3,26 @@ CXXFLAGS := -O2 -std=c++20 -Wall -Wextra -I.
 LDLIBS   := -lgmpxx -lgmp
 
 
-LIB_SRC  := conjunctive_grammar/grammar.cc \
-            conjunctive_grammar/grammar_io.cc \
-            conjunctive_grammar/symbol_table.cc \
-            conjunctive_grammar/symbol_names_generator.cc
+LIB_SRC  := src/conjunctive_grammar/grammar.cc \
+            src/conjunctive_grammar/grammar_io.cc \
+            src/conjunctive_grammar/symbol_table.cc \
+            src/conjunctive_grammar/symbol_names_generator.cc
 
 
-SOLVER_SRC := solver/main.cc \
-              solver/convolution.cc \
-              solver/grammar_solver.cc
+SOLVER_SRC := src/solver_main.cc \
+              src/solver/convolution.cc \
+              src/solver/grammar_solver.cc
 
 
-GRAMMAR_SRC := conjunctive_grammar/main.cc
+GRAMMAR_SRC := src/normaliser_main.cc
 
 LIB_OBJ     := $(LIB_SRC:.cc=.o)
 SOLVER_OBJ  := $(SOLVER_SRC:.cc=.o)
 GRAMMAR_OBJ := $(GRAMMAR_SRC:.cc=.o)
 
 
-TARGET_SOLVER  := solver_main
-TARGET_GRAMMAR := grammar_main
+TARGET_SOLVER  := solver
+TARGET_GRAMMAR := normaliser
 
 
 all: $(TARGET_SOLVER) $(TARGET_GRAMMAR)

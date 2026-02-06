@@ -1,13 +1,12 @@
-#include "conjunctive_grammar/grammar.h"
+#include "src/conjunctive_grammar/grammar.h"
 
 #include <algorithm>
 #include <iostream>
 #include <queue>
 #include <vector>
 
-#include "conjunctive_grammar/grammar_io.h"
-#include "conjunctive_grammar/grammar_types.h"
-#include "grammar.h"
+#include "src/conjunctive_grammar/grammar_io.h"
+#include "src/conjunctive_grammar/grammar_types.h"
 
 namespace conjunctive_grammar {
 

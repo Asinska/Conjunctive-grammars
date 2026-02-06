@@ -1,0 +1,6 @@
+S A B C
+a 
+S -> A A & B B & C C 
+A -> A A & A B & A C | a | eps
+B -> B A & B B & B C | a a | eps 
+C -> C A & C B & C C | a a a | eps

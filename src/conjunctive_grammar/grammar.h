@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-#include "conjunctive_grammar/grammar_io.h"
-#include "conjunctive_grammar/grammar_types.h"
-#include "conjunctive_grammar/symbol_names_generator.h"
-#include "conjunctive_grammar/symbol_table.h"
+#include "src/conjunctive_grammar/grammar_io.h"
+#include "src/conjunctive_grammar/grammar_types.h"
+#include "src/conjunctive_grammar/symbol_names_generator.h"
+#include "src/conjunctive_grammar/symbol_table.h"
 
 namespace conjunctive_grammar {
 

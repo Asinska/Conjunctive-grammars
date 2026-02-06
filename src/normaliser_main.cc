@@ -1,11 +1,11 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
-#include "conjunctive_grammar/grammar.h"
+#include "src/conjunctive_grammar/grammar.h"
 
-int main(int argc, char const **argv) {
+int main(int argc, char const** argv) {
   std::ifstream instream;
-  std::ofstream outstream; 
+  std::ofstream outstream;
   std::istream* input_ptr = &std::cin;
   std::ostream* output_ptr = &std::cout;
 
@@ -30,14 +30,14 @@ int main(int argc, char const **argv) {
   }
   conjunctive_grammar::ConjunctiveGrammar grammar =
       conjunctive_grammar::ConjunctiveGrammar();
-  
+
   if (!grammar.Read(*input_ptr)) {
     return 1;
   }
   if (!grammar.IsNormal()) {
     grammar.Normalise();
   } else {
-    std::cout << "Grammar is already in normal form.\n";
+    std::cerr << "Grammar is already in normal form.\n";
   }
   grammar.Print(*output_ptr);
 }

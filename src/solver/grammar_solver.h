@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "conjunctive_grammar/grammar.h"
-#include "solver/solver_types.h"
+#include "src/conjunctive_grammar/grammar.h"
+#include "src/solver/solver_types.h"
 
 namespace grammar_solver {
 

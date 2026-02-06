@@ -1,4 +1,4 @@
-#include "conjunctive_grammar/symbol_table.h"
+#include "src/conjunctive_grammar/symbol_table.h"
 
 namespace conjunctive_grammar {
 

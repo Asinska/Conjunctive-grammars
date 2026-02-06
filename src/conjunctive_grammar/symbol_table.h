@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "conjunctive_grammar/symbol_names_generator.h"
+#include "src/conjunctive_grammar/symbol_names_generator.h"
 
 namespace conjunctive_grammar {
 
